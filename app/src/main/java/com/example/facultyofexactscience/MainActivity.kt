@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,14 +36,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.tv.material3.Card
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
@@ -74,13 +76,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Main() {
-    val currentTime = getCurrentTime()
-    val currentDate = getCurrentDateUsingCalendar()
-
     Row(
         modifier = Modifier.fillMaxSize()
     ) {
-        Sidebar(currentTime, currentDate)
+        Sidebar()
         Container()
     }
 }
@@ -91,10 +90,30 @@ fun Container() {
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-        Image(painter = painterResource(id = R.drawable.wave_vector),
-            contentDescription = "Background",
-            contentScale = ContentScale.Crop,
+
+        Canvas(
+            modifier = Modifier.fillMaxSize()) {
+            val wavePath = Path().apply {
+                moveTo(0f, size.height * 0.85f)
+                quadraticBezierTo(
+                    size.width * 0.25f, size.height * 0.9f,
+                    size.width * 0.4f, size.height * 0.95f
+                )
+                quadraticBezierTo(
+                    size.width * 0.8f, size.height * 0.65f,
+                    size.width , size.height * 0.8f
+                )
+                lineTo(size.width, size.height)
+                lineTo(0f, size.height)
+                close()
+            }
+
+            drawPath(
+                path = wavePath,
+                color = Color(0xFF0B6623),
+                style = Fill
             )
+        }
         Column(
             modifier = Modifier.fillMaxSize().padding(vertical = 10.dp),
             verticalArrangement = Arrangement.Center,
@@ -219,7 +238,7 @@ fun EventItem(event: Event, isCurrent: Boolean) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Event Details
+
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -312,23 +331,23 @@ fun AutoCarousel(
 
 
 @Composable
-fun Sidebar(currentTime: String, currentDate: String) {
+fun Sidebar() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(0.25f)
+            .fillMaxWidth(0.3f)
             .background(
                 Color(0xFFF0FFED),
                 shape = RoundedCornerShape(
-                    topEnd = 20.dp,    // Top-end corner radius
-                    bottomEnd = 20.dp  // Bottom-end corner radius
+                    topEnd = 20.dp,
+                    bottomEnd = 20.dp
                 )
             )
 
     ) {
         Header("UTMB",R.drawable.utmb_last2_rb)
         Divider()
-        TimeDisplay(currentTime, currentDate)
+        TimeDisplay()
         DepartmentMap()
         Footer()
     }
@@ -367,7 +386,18 @@ fun Divider() {
 }
 
 @Composable
-fun TimeDisplay(currentTime: String, currentDate: String) {
+fun TimeDisplay() {
+    var currentTime by remember { mutableStateOf(getCurrentTime()) }
+    var currentDate by remember { mutableStateOf(getCurrentDate()) }
+
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            currentTime = getCurrentTime()
+            currentDate = getCurrentDate()
+            delay(1000L)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -449,16 +479,10 @@ fun Footer() {
     }
 }
 
-@SuppressLint("DefaultLocale")
-fun getCurrentDateUsingCalendar(): String {
-    val calendar = Calendar.getInstance()
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
-    val month = calendar.get(Calendar.MONTH) + 1
-    val year = calendar.get(Calendar.YEAR)
-
-    return String.format("%02d/%02d/%d", day, month, year)
+fun getCurrentDate(): String {
+    val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())
+    return dateFormat.format(Date())
 }
-
 fun getCurrentTime(): String {
     val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
     return sdf.format(Date())
