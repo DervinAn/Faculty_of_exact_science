@@ -1,6 +1,6 @@
 package com.example.facultyofexactscience
 
-import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,14 +54,15 @@ import androidx.tv.material3.Text
 import com.example.facultyofexactscience.ui.theme.FacultyOfExactScienceTheme
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalTvMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         setContent {
             FacultyOfExactScienceTheme {
                 Surface(
@@ -79,60 +81,69 @@ fun Main() {
     Row(
         modifier = Modifier.fillMaxSize()
     ) {
-        Sidebar()
-        Container()
+        val configuration = LocalConfiguration.current
+
+        Sidebar(configuration.screenHeightDp)
+        Container(configuration.screenWidthDp)
     }
 }
 
 @Composable
-fun Container() {
+fun Container(screenWidthDp: Int) {
 
     Box(
         modifier = Modifier.fillMaxSize()
     ){
+            Canvas(
+                modifier = Modifier.fillMaxSize()) {
+                val wavePath = Path().apply {
+                    moveTo(0f, size.height * 0.85f)
+                    cubicTo(
+                        size.width * 0.1f, size.height,
+                        size.width * 0.3f, size.height * 0.9f,
+                        size.width * 0.5f, size.height * 0.95f
+                    )
+                    cubicTo(
+                        size.width * 0.7f, size.height * 0.9f,
+                        size.width * 0.8f, size.height * 0.65f,
+                        size.width, size.height * 0.8f
+                    )
+                    lineTo(size.width, size.height)
+                    lineTo(0f, size.height)
+                    close()
+                }
 
-        Canvas(
-            modifier = Modifier.fillMaxSize()) {
-            val wavePath = Path().apply {
-                moveTo(0f, size.height * 0.85f)
-                quadraticBezierTo(
-                    size.width * 0.25f, size.height * 0.9f,
-                    size.width * 0.4f, size.height * 0.95f
+
+                drawPath(
+                    path = wavePath,
+                    color = Color(0xFF0B6623),
+                    style = Fill
                 )
-                quadraticBezierTo(
-                    size.width * 0.8f, size.height * 0.65f,
-                    size.width , size.height * 0.8f
-                )
-                lineTo(size.width, size.height)
-                lineTo(0f, size.height)
-                close()
             }
 
-            drawPath(
-                path = wavePath,
-                color = Color(0xFF0B6623),
-                style = Fill
-            )
-        }
+
         Column(
             modifier = Modifier.fillMaxSize().padding(vertical = 10.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Header("Faculty of science",R.drawable.f_e_s)
+            Header("Faculty of science", R.drawable.f_e_s, screenWidthDp)
             val items = listOf(
                 R.drawable.faculte_map,
                 R.drawable.faculte_map,
                 R.drawable.faculte_map,
                 R.drawable.faculte_map,
             )
+            Spacer(modifier = Modifier.fillMaxHeight(0.005f))
             AutoCarousel(items)
+            Spacer(modifier = Modifier.fillMaxHeight(0.005f))
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                EventSlider()
-                Qrcode()
+                EventSlider(screenWidthDp)
+                Qrcode(screenWidthDp)
             }
 
         }
@@ -141,18 +152,25 @@ fun Container() {
 
 
 @Composable
-fun Qrcode() {
+fun Qrcode(screenWidthDp: Int) {
     Column(
-            modifier = Modifier.fillMaxWidth(0.5f),
+            modifier = Modifier,
           horizontalAlignment = Alignment.End,
     ) {
+        if (screenWidthDp >= 1080){
         Text(
             text = "Social Media",
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold
-        )
+        )}else{
+        Text(
+            text = "Social Media",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )}
+
         Box(
-            modifier = Modifier.width(150.dp).height(150.dp)
+            modifier = Modifier.fillMaxWidth(0.35f).fillMaxHeight(1f)
                 .clip(RoundedCornerShape(20.dp))
                 .background(Color(0xFF34693F))
                 ,
@@ -179,7 +197,7 @@ data class Event(
 
 
 @Composable
-fun EventSlider() {
+fun EventSlider(screenWidthDp: Int) {
 
     val events = listOf(
     Event("Event 1", "Description 1", "Date 1", "Time 1"),
@@ -191,19 +209,19 @@ fun EventSlider() {
 
 
     Row(
-        modifier = Modifier.fillMaxWidth(0.5f),
+        modifier = Modifier,
         horizontalArrangement = Arrangement.Center
     ) {
         events.forEachIndexed { index, event ->
             val isCurrent = index == eventIndex
-            EventItem(event = event, isCurrent = isCurrent)
-            Spacer(modifier = Modifier.width(8.dp)) // Add spacing between items
+            EventItem(event = event, isCurrent = isCurrent,screenWidthDp)
+            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
 
 @Composable
-fun EventItem(event: Event, isCurrent: Boolean) {
+fun EventItem(event: Event, isCurrent: Boolean, screenWidthDp: Int) {
     val backgroundColor = if (isCurrent) Color(0xFF34693F) else Color.White
     val textColor = if (isCurrent) Color.White else Color(0xFF34693F)
     val borderColor = if (isCurrent) Color(0xFF757D74) else Color(0xFF34693F)
@@ -211,8 +229,8 @@ fun EventItem(event: Event, isCurrent: Boolean) {
 
     Box(
         modifier = Modifier
-            .height(200.dp)
-            .width(135.dp)
+            .fillMaxHeight(0.95f)
+            .width(150.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(backgroundColor)
             .border(1.dp, borderColor, RoundedCornerShape(20.dp))
@@ -223,6 +241,7 @@ fun EventItem(event: Event, isCurrent: Boolean) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Start
             ) {
+                if (screenWidthDp >= 1080){
                 Text(
                     text = "08",
                     color = textColor,
@@ -233,7 +252,18 @@ fun EventItem(event: Event, isCurrent: Boolean) {
                     text = "Feb",
                     color = textColor,
                     style = MaterialTheme.typography.bodyLarge
-                )
+                )}else{
+                    Text(
+                        text = "08",
+                        color = textColor,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Feb",
+                        color = textColor,
+                        style = MaterialTheme.typography.bodySmall)
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -242,18 +272,32 @@ fun EventItem(event: Event, isCurrent: Boolean) {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    text = event.title,
-                    color = textColor,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = event.description,
-                    color = textColor,
-                    style = MaterialTheme.typography.bodyLarge,
+                if (screenWidthDp >= 1080) {
+                    Text(
+                        text = event.title,
+                        color = textColor,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = event.description,
+                        color = textColor,
+                        style = MaterialTheme.typography.bodyLarge,
 
-                )
+                        )
+                }else{
+                    Text(
+                        text = event.title,
+                        color = textColor,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = event.description,
+                        color = textColor,
+                        style = MaterialTheme.typography.bodySmall,
+                        )
+                }
             }
         }
     }
@@ -331,7 +375,7 @@ fun AutoCarousel(
 
 
 @Composable
-fun Sidebar() {
+fun Sidebar(screenWidthDp: Int) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -345,33 +389,49 @@ fun Sidebar() {
             )
 
     ) {
-        Header("UTMB",R.drawable.utmb_last2_rb)
+        Header("UTMB",R.drawable.utmb_last2_rb,screenWidthDp)
         Divider()
-        TimeDisplay()
-        DepartmentMap()
-        Footer()
+        TimeDisplay(screenWidthDp)
+        DepartmentMap(screenWidthDp)
+        Footer(screenWidthDp)
     }
 }
 
 @Composable
-fun Header(name: String = "",icon: Int) {
+fun Header(name: String = "", icon: Int, screenWidthDp: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight(0.2f)
             .padding(16.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(icon),
-            contentDescription = "Logo",
-            modifier = Modifier.size(100.dp)
-        )
-        Text(
-            name,
-            fontSize = 27.sp,
-            fontWeight = FontWeight.Bold
-        )
+
+        if (screenWidthDp >= 980) {
+            Image(
+                painter = painterResource(icon),
+                contentDescription = "Logo",
+                modifier = Modifier.size(100.dp)
+            )
+            Text(
+                name,
+                fontSize = 27.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }else{
+            Image(
+                painter = painterResource(icon),
+                contentDescription = "Logo",
+                modifier = Modifier.size(60.dp)
+            )
+            Text(
+                name,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
     }
 }
 
@@ -386,7 +446,7 @@ fun Divider() {
 }
 
 @Composable
-fun TimeDisplay() {
+fun TimeDisplay(screenWidthDp: Int) {
     var currentTime by remember { mutableStateOf(getCurrentTime()) }
     var currentDate by remember { mutableStateOf(getCurrentDate()) }
 
@@ -405,31 +465,52 @@ fun TimeDisplay() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text(
-            text = currentTime,
-            fontSize = 50.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Text(
-            text = currentDate,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-        )
+        if (screenWidthDp >= 580) {
+            Text(
+                text = currentTime,
+                fontSize = 50.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = currentDate,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }else{
+            Text(
+                text = currentTime,
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = currentDate,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+
     }
 }
 
 @Composable
-fun DepartmentMap() {
+fun DepartmentMap(screenWidthDp: Int) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        if (screenWidthDp >= 580){
         Text(
             "Department Map",
             fontWeight = FontWeight.Bold,
             fontSize = 29.sp
-        )
+        )}else{
+            Text(
+                "Department Map",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
@@ -448,7 +529,7 @@ fun DepartmentMap() {
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun Footer() {
+fun Footer(screenWidthDp: Int) {
     Spacer(modifier = Modifier.fillMaxHeight(0.1f))
     Column(
         modifier = Modifier
@@ -464,11 +545,20 @@ fun Footer() {
                 .background(Color(0xFFD3E8D1))
                 .border(1.dp, Color.Black, shape = RoundedCornerShape(16.dp))
         ) {
-            Text(
-                "Lorem Epsun Lorem EpsunLoremEpsun",
-                fontSize = 28.sp,
-                modifier = Modifier.padding(16.dp)
-            )
+            if (screenWidthDp >= 580){
+                Text(
+                    "Lorem Epsun Lorem EpsunLoremEpsun",
+                    fontSize = 28.sp,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }else{
+                Text(
+                    "Lorem Epsun Lorem EpsunLoremEpsun",
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+
         }
         Icon(
             painter = painterResource(id = R.drawable.id_logo),
