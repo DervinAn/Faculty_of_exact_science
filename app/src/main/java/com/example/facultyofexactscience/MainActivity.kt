@@ -402,7 +402,7 @@ fun Header(name: String = "", icon: Int, screenWidthDp: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.2f)
+            .fillMaxHeight(0.15f)
             .padding(16.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
