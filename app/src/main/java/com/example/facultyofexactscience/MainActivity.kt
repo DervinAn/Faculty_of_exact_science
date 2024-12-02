@@ -27,6 +27,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -123,7 +124,9 @@ fun Container(screenWidthDp: Int) {
 
 
         Column(
-            modifier = Modifier.fillMaxSize().padding(vertical = 10.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 10.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -170,7 +173,9 @@ fun Qrcode(screenWidthDp: Int) {
         )}
 
         Box(
-            modifier = Modifier.fillMaxWidth(0.35f).fillMaxHeight(1f)
+            modifier = Modifier
+                .fillMaxWidth(0.35f)
+                .fillMaxHeight(1f)
                 .clip(RoundedCornerShape(20.dp))
                 .background(Color(0xFF34693F))
                 ,
@@ -187,12 +192,17 @@ fun Qrcode(screenWidthDp: Int) {
 
 }
 
+data class EventTime(
+    val startTime: String,
+    val endTime: String
+)
 
 data class Event(
     val title: String = "",
     val description: String = "",
     val date: String = "",
-    val time: String = ""
+    var isCurrent: Boolean = false,
+    val time: EventTime = EventTime(startTime = "00:00", endTime = "00:00")
 )
 
 
@@ -200,21 +210,33 @@ data class Event(
 fun EventSlider(screenWidthDp: Int) {
 
     val events = listOf(
-    Event("Event 1", "Description 1", "Date 1", "Time 1"),
-        Event("Event 2", "Description 2", "Date 2", "Time 2"),
-        Event("Event 3", "Description 3", "Date 3", "Time 3"),
+        Event("Event 1", "Description 1", "Date 1", true,EventTime("13:54", "13:59")),
+        Event("Event 2", "Description 2", "Date 2", false,EventTime("14:00", "16:20")),
+        Event("Event 3", "Description 3", "Date 3", false, EventTime("17:30:", "20:00")),
     )
 
     val eventIndex by remember { mutableIntStateOf(0) }
 
+    var currentTime by remember { mutableStateOf(getCurrentTime()) }
+    var currentDate by remember { mutableStateOf(getCurrentDate()) }
 
+    LaunchedEffect(Unit) {
+        while (true) {
+            currentTime = getCurrentTime()
+            currentDate = getCurrentDate()
+            delay(1000L)
+        }
+    }
+
+    val updatedEvents = events.map { event ->
+        event.copy(isCurrent = currentTime >= event.time.startTime && currentTime <= event.time.endTime)
+    }
     Row(
         modifier = Modifier,
         horizontalArrangement = Arrangement.Center
     ) {
-        events.forEachIndexed { index, event ->
-            val isCurrent = index == eventIndex
-            EventItem(event = event, isCurrent = isCurrent,screenWidthDp)
+        updatedEvents.forEachIndexed { index, event ->
+            EventItem(event = event,isCurrent = event.isCurrent,screenWidthDp)
             Spacer(modifier = Modifier.width(8.dp))
         }
     }
