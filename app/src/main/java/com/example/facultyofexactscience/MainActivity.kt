@@ -27,7 +27,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -215,7 +214,6 @@ fun EventSlider(screenWidthDp: Int) {
         Event("Event 3", "Description 3", "Date 3", false, EventTime("17:30:", "20:00")),
     )
 
-    val eventIndex by remember { mutableIntStateOf(0) }
 
     var currentTime by remember { mutableStateOf(getCurrentTime()) }
     var currentDate by remember { mutableStateOf(getCurrentDate()) }
@@ -235,7 +233,7 @@ fun EventSlider(screenWidthDp: Int) {
         modifier = Modifier,
         horizontalArrangement = Arrangement.Center
     ) {
-        updatedEvents.forEachIndexed { index, event ->
+        updatedEvents.forEach { event ->
             EventItem(event = event,isCurrent = event.isCurrent,screenWidthDp)
             Spacer(modifier = Modifier.width(8.dp))
         }
@@ -543,7 +541,7 @@ fun DepartmentMap(screenWidthDp: Int) {
             Image(
                 painter = painterResource(id = R.drawable.faculte_map),
                 contentDescription = "Map",
-                contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                contentScale = ContentScale.Crop,
             )
         }
     }

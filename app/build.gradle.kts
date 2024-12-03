@@ -48,9 +48,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.tv.foundation)
     implementation(libs.androidx.tv.material)
-    implementation (libs.androidx.constraintlayout.compose)
-    implementation (libs.androidx.constraintlayout.compose.v110)
-
+//    implementation (libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout)
