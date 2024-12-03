@@ -4,7 +4,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,14 +43,9 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
         R.drawable.four
     )
     val carouselState = rememberCarouselState()
-    val isCarouselFocused by remember { mutableStateOf(true) }
     Carousel(
         modifier = modifier
-
-            //.padding(start = padding.start, end = padding.start, top = padding.top)
-            //   .border(width = widht, color = MaterialTheme.colorScheme.onSurface.copy(alpha = alpha), shape = ShapeDefaults.Medium,)
             .clip(ShapeDefaults.ExtraLarge),
-
         itemCount = items.size,
         carouselState = carouselState,
         carouselIndicator = {
@@ -71,7 +64,7 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
                 Image(
                     painter = painterResource(id = items[it]),
                     contentDescription = "Carousel Image",
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillBounds
                 )
             }
         }

@@ -19,15 +19,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import com.example.facultyofexactscience.Event
 
 @Composable
 fun EventItem(
-    event: Event,
-    isCurrent: Boolean) {
-    val backgroundColor = if (isCurrent) Color(0xFF34693F) else Color.White
-    val textColor = if (isCurrent) Color.White else Color(0xFF34693F)
-    val borderColor = if (isCurrent) Color(0xFF757D74) else Color(0xFF34693F)
+    event: Event
+) {
+    val backgroundColor = if (event.isCurrent) Color(0xFF34693F) else Color.White
+    val textColor = if (event.isCurrent) Color.White else Color(0xFF34693F)
+    val borderColor = if (event.isCurrent) Color(0xFF757D74) else Color(0xFF34693F)
     Box(
         modifier = Modifier
             .height(200.dp)
@@ -80,10 +79,4 @@ fun EventItem(
             }
         }
     }
-}
-
-@Composable
-fun EventItemNew(modifier: Modifier = Modifier) {
-
-
 }
