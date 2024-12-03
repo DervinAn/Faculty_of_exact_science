@@ -10,7 +10,7 @@ import androidx.tv.material3.lightColorScheme
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun FacultyOfExactScienceTheme(
-    isInDarkTheme: Boolean = isSystemInDarkTheme(),
+    isInDarkTheme: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = if (isInDarkTheme) {
