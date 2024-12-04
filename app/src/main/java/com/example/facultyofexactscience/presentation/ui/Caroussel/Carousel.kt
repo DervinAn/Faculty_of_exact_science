@@ -8,11 +8,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,9 +44,7 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
     )
     val carouselState = rememberCarouselState()
     Carousel(
-        modifier = modifier.fillMaxHeight(0.5f)
-            //.padding(start = padding.start, end = padding.start, top = padding.top)
-            //   .border(width = widht, color = MaterialTheme.colorScheme.onSurface.copy(alpha = alpha), shape = ShapeDefaults.Medium,)
+        modifier = modifier
             .clip(ShapeDefaults.ExtraLarge),
         itemCount = items.size,
         carouselState = carouselState,
@@ -64,7 +64,7 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
                 Image(
                     painter = painterResource(id = items[it]),
                     contentDescription = "Carousel Image",
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillBounds
                 )
             }
         }
