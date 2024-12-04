@@ -1,7 +1,7 @@
 package com.example.facultyofexactscience.api
 
-import androidx.tracing.perfetto.handshake.protocol.Response
-import com.example.facultyofexactscience.presentation.ui.event.Event
+//import androidx.tracing.perfetto.handshake.protocol.Response
+//import com.example.facultyofexactscience.presentation.ui.event.Event
 
 //
 //interface ApiService {

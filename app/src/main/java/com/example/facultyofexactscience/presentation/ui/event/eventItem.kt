@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -134,7 +133,7 @@ fun EventItemNew(
             contentColor = contentColor,
             focusedContentColor = focusedContentColor
         ),
-        scale = CardDefaults.scale(focusedScale = if (isFocused) 1.05f else 1f,),
+        scale = CardDefaults.scale(focusedScale = if (isFocused) 1.05f else 1f),
         shape = CardDefaults.shape(ShapeDefaults.ExtraLarge),) {
         Box(
             modifier = Modifier.padding(20.dp)
