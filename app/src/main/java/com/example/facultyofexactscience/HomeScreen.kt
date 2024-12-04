@@ -16,7 +16,7 @@ import com.example.facultyofexactscience.presentation.ui.Canva
 import com.example.facultyofexactscience.presentation.ui.Caroussel.NewCaroussel
 import com.example.facultyofexactscience.presentation.ui.Header
 import com.example.facultyofexactscience.presentation.ui.Qrcode
-import com.example.facultyofexactscience.presentation.ui.event.EventSlider
+import com.example.facultyofexactscience.presentation.ui.event.Eventssss
 
 @Composable
 fun Container() {
@@ -43,7 +43,7 @@ fun Container() {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                EventSlider(
+                Eventssss(
                     modifier = Modifier.weight(0.5f)
                 )
                 Qrcode(

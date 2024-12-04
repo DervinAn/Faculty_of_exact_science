@@ -1,8 +1,6 @@
 package com.example.facultyofexactscience.presentation.ui.event
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,10 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +32,6 @@ import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.ShapeDefaults
 import androidx.tv.material3.Text
-import com.example.facultyofexactscience.Event
 import com.example.facultyofexactscience.ui.theme.border
 import com.example.facultyofexactscience.ui.theme.containerColor
 import com.example.facultyofexactscience.ui.theme.contentColor
@@ -45,8 +39,7 @@ import com.example.facultyofexactscience.ui.theme.focusedContainerColor
 import com.example.facultyofexactscience.ui.theme.focusedContentColor
 import kotlinx.coroutines.delay
 
-@Composable
-fun EventItem(
+/**fun EventItem(
     event: Event,
     isCurrent: Boolean
 ) {
@@ -108,6 +101,7 @@ fun EventItem(
         }
     }
 }
+*/
 
 @Composable
 fun EventItemNew(
@@ -158,7 +152,7 @@ fun EventItemNew(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = event.time,
+                        text = "event.time",
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
@@ -185,9 +179,9 @@ fun EventItemNew(
 @Composable
 fun Eventssss(modifier: Modifier = Modifier) {
     val events = listOf(
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", "12PM"),
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", "12PM"),
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", "12PM"),
+        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
+        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
+        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
     )
     val intervalMillis: Long = 5000
     val focusRequesters = remember { events.map { FocusRequester() } }
