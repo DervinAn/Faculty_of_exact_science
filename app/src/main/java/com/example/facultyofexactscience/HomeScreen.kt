@@ -11,17 +11,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.facultyofexactscience.presentation.ui.Canva
 import com.example.facultyofexactscience.presentation.ui.Caroussel.NewCaroussel
 import com.example.facultyofexactscience.presentation.ui.Header
 import com.example.facultyofexactscience.presentation.ui.Qrcode
-import com.example.facultyofexactscience.presentation.ui.event.EventSlider
+import com.example.facultyofexactscience.presentation.ui.event.Eventssss
 
 @Composable
 fun Container() {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         Canva()
         Column(
@@ -40,15 +42,14 @@ fun Container() {
             )
             NewCaroussel(
                 modifier = Modifier
-                    .height(400.dp)
-                    .padding(16.dp),
-
-                )
+                    .padding(start = 16.dp,end=16.dp)
+                    .height(324.dp)
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                EventSlider(
+                Eventssss(
                     modifier = Modifier.weight(0.5f)
                 )
                 Qrcode(
@@ -59,4 +60,14 @@ fun Container() {
 
         }
     }
+}
+
+@Preview(
+    name = "TV Preview",
+    showBackground = true,
+    widthDp = 1280,
+    heightDp = 720
+)@Composable
+private fun COntainnerPrev() {
+    Container()
 }
