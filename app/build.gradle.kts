@@ -50,6 +50,7 @@ dependencies {
     implementation("androidx.tv:tv-material:1.0.0")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.tracing.perfetto.handshake)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
     androidTestImplementation(libs.androidx.ui.test.junit4)
