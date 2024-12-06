@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Surface
+import com.example.facultyofexactscience.presentation.ui.Canva
 import com.example.facultyofexactscience.ui.theme.FacultyOfExactScienceTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,11 +36,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Main() {
-    Row(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Sidebar()
-        Container()
+    Box() {
+        Canva()
+        Row(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Sidebar()
+            Container()
+        }
     }
 }
 
@@ -53,8 +57,6 @@ fun Divider() {
             .background(Color.Gray)
     )
 }
-
-
 
 
 @Preview(
