@@ -17,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.ui.theme.border
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun Footer() {
     Spacer(modifier = Modifier.fillMaxHeight(0.1f))
@@ -39,8 +39,10 @@ fun Footer() {
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .fillMaxHeight(0.55f)
+                .clip(RoundedCornerShape(16.dp))
+                .border(1.dp, border, shape = RoundedCornerShape(16.dp))
                 .background(Color(0xFFD3E8D1))
-                .border(1.dp, Color.Black, shape = RoundedCornerShape(16.dp))
+
         ) {
             Text(
                 "Lorem Epsun Lorem EpsunLoremEpsun",
@@ -55,4 +57,11 @@ fun Footer() {
             tint = Color.Unspecified
         )
     }
+}
+
+@Preview
+@Composable
+private fun hhh() {
+    Footer()
+    
 }

@@ -60,13 +60,8 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
             .togetherWith(fadeOut(tween(durationMillis = 1000))),
         autoScrollDurationMillis = 5000,
         content = {
-            Box() {
-                Image(
-                    painter = painterResource(id = items[it]),
-                    contentDescription = "Carousel Image",
-                    contentScale = ContentScale.FillBounds
-                )
-            }
+                Image(painter = painterResource(id = items[it]), contentDescription = "Carousel Image", contentScale = ContentScale.Fit, alignment = Alignment.Center)
+
         }
     )
 }

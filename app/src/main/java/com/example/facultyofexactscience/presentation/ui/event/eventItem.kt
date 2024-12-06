@@ -5,6 +5,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -134,7 +135,7 @@ fun EventItemNew(
             focusedContentColor = focusedContentColor
         ),
         scale = CardDefaults.scale(focusedScale = if (isFocused) 1.05f else 1f),
-        shape = CardDefaults.shape(ShapeDefaults.ExtraLarge),) {
+        shape = CardDefaults.shape(ShapeDefaults.ExtraLarge)) {
         Box(
             modifier = Modifier.padding(20.dp)
         ) {
@@ -196,14 +197,15 @@ fun Eventssss(modifier: Modifier = Modifier) {
     }
 
     LazyRow(
-        modifier = modifier.padding(16.dp).fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(16.dp)
+
     ) {
         itemsIndexed(events) { index, event ->
             EventItemNew(
                 event = event,
                 focusRequester = focusRequesters[index],
-                isFocused = selectedIndex == index
+                isFocused = selectedIndex == index, modifier = Modifier
             )
         }
     }
