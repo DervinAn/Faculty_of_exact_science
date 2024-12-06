@@ -196,7 +196,7 @@ fun Eventssss(modifier: Modifier = Modifier) {
     }
 
     LazyRow(
-        modifier = modifier.padding(16.dp).fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         itemsIndexed(events) { index, event ->

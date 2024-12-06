@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.facultyofexactscience.presentation.ui.Canva
-import com.example.facultyofexactscience.presentation.ui.Caroussel.NewCaroussel
+import com.example.facultyofexactscience.presentation.ui.caroussel.NewCaroussel
 import com.example.facultyofexactscience.presentation.ui.Header
 import com.example.facultyofexactscience.presentation.ui.Qrcode
 import com.example.facultyofexactscience.presentation.ui.event.Eventssss
