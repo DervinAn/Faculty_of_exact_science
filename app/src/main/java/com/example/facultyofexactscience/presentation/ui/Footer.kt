@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.tv.material3.Icon
+import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
 import com.example.facultyofexactscience.ui.theme.border
@@ -46,7 +47,7 @@ fun Footer() {
         ) {
             Text(
                 "Lorem Epsun Lorem EpsunLoremEpsun",
-                fontSize = 28.sp,
+                style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(16.dp)
             )
         }

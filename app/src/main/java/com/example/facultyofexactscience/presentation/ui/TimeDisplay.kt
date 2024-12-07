@@ -13,8 +13,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -38,26 +40,34 @@ fun TimeDisplay() {
             .fillMaxWidth()
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
             text = currentTime,
-            fontSize = 50.sp,
+           style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
         )
         Text(
             text = currentDate,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.titleMedium,
+          //  fontWeight = FontWeight.Bold,
         )
     }
 }
 fun getCurrentDate(): String {
-    val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("EEE,d MMMM",
+        Locale.getDefault())
     return dateFormat.format(Date())
 }
 
 fun getCurrentTime(): String {
-    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val sdf = SimpleDateFormat("HH:mm",Locale.getDefault())
     return sdf.format(Date())
+}
+
+@Preview
+@Composable
+private fun TimedisPrev() {
+    TimeDisplay()
+    
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
 
@@ -30,8 +31,8 @@ fun DepartmentMap() {
     ) {
         Text(
             "Department Map",
-            fontWeight = FontWeight.Bold,
-            fontSize = 29.sp
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.SemiBold
         )
         Box(
             modifier = Modifier

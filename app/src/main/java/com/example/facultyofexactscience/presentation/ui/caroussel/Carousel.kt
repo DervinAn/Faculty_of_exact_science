@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -57,13 +58,17 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
             .togetherWith(fadeOut(tween(durationMillis = 1000))),
         autoScrollDurationMillis = 5000,
         content = {
-                Image(painter = painterResource(id = items[it]), contentDescription = "Carousel Image", contentScale = ContentScale.Fit, alignment = Alignment.Center)
-
+            Image(
+                painter = painterResource(id = items[it]),
+                contentDescription = "Carousel Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
         }
     )
 }
 
-
+/**
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 private fun BoxScope.CarouselIndicator(
@@ -93,7 +98,7 @@ private fun BoxScope.CarouselIndicator(
                     modifier =
                     Modifier
                         .size(
-                          8.dp
+                            20.dp
                         )
                         .background(
                             color = if (isActive) activeColor else inactiveColor,
@@ -101,6 +106,33 @@ private fun BoxScope.CarouselIndicator(
                         ),
                 )
             },
+            activeItemIndex = activeItemIndex,
+        )
+    }
+}*/
+
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Composable
+private fun BoxScope.CarouselIndicator(
+    itemCount: Int,
+    activeItemIndex: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .padding(28.dp)
+            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+            .graphicsLayer {
+                clip = true
+                shape = ShapeDefaults.ExtraSmall
+            }
+            .align(Alignment.BottomEnd)
+    ) {
+        CarouselDefaults.IndicatorRow(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(8.dp),
+            itemCount = itemCount,
             activeItemIndex = activeItemIndex,
         )
     }

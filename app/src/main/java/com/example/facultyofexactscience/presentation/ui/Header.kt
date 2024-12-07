@@ -15,7 +15,8 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 
 @Composable
-fun Header(name: String = "", icon: Int) {
+fun Header(name: String = "",
+           icon: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
