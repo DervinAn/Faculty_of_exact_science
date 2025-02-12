@@ -1,4 +1,4 @@
-package com.example.facultyofexactscience.faculty.presentation.components.event
+package com.example.facultyofexactscience.faculty.domain
 
 data class Time(
     val startingTime: String = "",

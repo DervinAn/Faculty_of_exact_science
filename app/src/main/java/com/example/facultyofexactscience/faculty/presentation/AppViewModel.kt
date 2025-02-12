@@ -2,7 +2,7 @@ package com.example.facultyofexactscience.faculty.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.facultyofexactscience.faculty.presentation.components.event.Event
+import com.example.facultyofexactscience.faculty.domain.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

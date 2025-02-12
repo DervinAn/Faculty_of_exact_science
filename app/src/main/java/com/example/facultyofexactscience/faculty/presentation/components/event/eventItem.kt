@@ -33,6 +33,8 @@ import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.ShapeDefaults
 import androidx.tv.material3.Text
+import com.example.facultyofexactscience.faculty.domain.Event
+import com.example.facultyofexactscience.faculty.domain.Time
 import com.example.facultyofexactscience.ui.theme.border
 import com.example.facultyofexactscience.ui.theme.containerColor
 import com.example.facultyofexactscience.ui.theme.contentColor
@@ -182,7 +184,7 @@ fun Events(modifier: Modifier = Modifier) {
     val events = listOf(
         Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
         Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
-       // Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
+        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
     )
     val intervalMillis: Long = 5000
     val focusRequesters = remember { events.map { FocusRequester() } }

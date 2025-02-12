@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization")
+    kotlin("kapt") // Add this line for Kotlin annotation processing
 }
 
 android {
@@ -47,13 +49,29 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.tv.foundation)
-    implementation("androidx.tv:tv-material:1.0.0")
+    implementation(libs.androidx.tv.material.v100)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.tracing.perfetto.handshake)
+    implementation(libs.volley)
+    implementation(libs.transport.runtime)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
 
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+        implementation(libs.ktor.client.core)
+        implementation(libs.ktor.client.cio)
+
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
+
+
+        // KotlinX Serialization
+        implementation(libs.kotlinx.serialization.json)
+
+
 }

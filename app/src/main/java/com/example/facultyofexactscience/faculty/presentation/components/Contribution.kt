@@ -10,12 +10,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Contribution(contributorsImage: List<Int>) {
+fun Contribution(contributorsImage: List<Int>,modifier: Modifier=Modifier) {
     contributorsImage.forEach { id ->
         Image(
             painter = painterResource(id = id),
             contentDescription = "Contributors",
-            modifier = Modifier
+            modifier = modifier
                 .size(85.dp)
                 .clip(CircleShape)
         )

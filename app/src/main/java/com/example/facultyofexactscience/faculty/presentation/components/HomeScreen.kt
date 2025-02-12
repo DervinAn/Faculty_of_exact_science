@@ -61,7 +61,9 @@ fun Container() {
                 Events(
                     modifier = Modifier.weight(1f)
                 )
-                Contribution(contributorsImage)
+                Contribution(contributorsImage,
+                    modifier = Modifier.weight(0.3f)
+                )
 
             }
 
