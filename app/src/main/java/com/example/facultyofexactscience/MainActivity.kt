@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Main() {
     Box {
-        Canva()
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -59,7 +58,7 @@ fun Divider() {
 @Preview(
     name = "TV Preview",
     showBackground = true,
-    widthDp = 1080,
+    widthDp = 1090,
     heightDp = 720
 )
 

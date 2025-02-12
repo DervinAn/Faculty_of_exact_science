@@ -178,7 +178,7 @@ fun EventItemNew(
 }
 
 @Composable
-fun Eventssss(modifier: Modifier = Modifier) {
+fun Events(modifier: Modifier = Modifier) {
     val events = listOf(
         Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
         Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
@@ -220,5 +220,5 @@ private fun Hehehehehhe() {
         event = Event("Event 1", "Lorem ipsum dolor sit amet, conslit.", "Feb", "21"),
         modifier = Modifier
     )*/
-    Eventssss()
+    Events()
 }

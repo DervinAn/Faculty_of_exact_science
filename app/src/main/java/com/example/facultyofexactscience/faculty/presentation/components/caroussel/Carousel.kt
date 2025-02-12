@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,17 +31,17 @@ import com.example.facultyofexactscience.R
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun NewCaroussel(modifier: Modifier = Modifier) {
+fun Carousel(modifier: Modifier = Modifier) {
     val items = listOf(
+        R.drawable.carousel_content,
         R.drawable.faculte_map,
-        R.drawable.one,
         R.drawable.three,
         R.drawable.four
     )
     val carouselState = rememberCarouselState()
     Carousel(
         modifier = modifier
-            .clip(ShapeDefaults.ExtraLarge),
+            .clip(RoundedCornerShape(28.dp)),
         itemCount = items.size,
         carouselState = carouselState,
         carouselIndicator = {
@@ -58,8 +59,7 @@ fun NewCaroussel(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = items[it]),
                 contentDescription = "Carousel Image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.clip(RoundedCornerShape(28.dp)).fillMaxSize(),
             )
         }
     )
@@ -143,6 +143,6 @@ private fun BoxScope.CarouselIndicator(
 private fun NewCarousselPrev() {
 
     Box(modifier = Modifier.padding(16.dp)) {
-        NewCaroussel()
+        Carousel()
     }
 }
