@@ -1,4 +1,4 @@
-package com.example.facultyofexactscience.presentation.ui
+package com.example.facultyofexactscience.faculty.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

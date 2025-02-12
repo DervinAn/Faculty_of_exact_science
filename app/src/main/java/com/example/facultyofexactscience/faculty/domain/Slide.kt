@@ -1,4 +1,4 @@
-package com.example.facultyofexactscience.presentation.ui.caroussel
+package com.example.facultyofexactscience.faculty.domain
 
 data class Slide(
     val id: String,

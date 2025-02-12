@@ -1,10 +1,11 @@
-package com.example.facultyofexactscience.presentation.ui.event
+package com.example.facultyofexactscience.faculty.presentation.components.event
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -110,9 +111,9 @@ fun EventItemNew(
     focusRequester: FocusRequester? = null,
     isFocused: Boolean = false
 ) {
-    Card(onClick = {
-            // Handle click events
-        }, modifier = modifier
+    Card(
+        onClick = {},
+        modifier = modifier
             .width(150.dp)
             .aspectRatio(CardDefaults.VerticalImageAspectRatio)
             .focusable() // Make the card focusable
@@ -133,7 +134,7 @@ fun EventItemNew(
             contentColor = contentColor,
             focusedContentColor = focusedContentColor
         ),
-        scale = CardDefaults.scale(focusedScale = if (isFocused) 1.05f else 1f),
+        scale = CardDefaults.scale(focusedScale = if (isFocused) 1.02f else 1f),
         shape = CardDefaults.shape(ShapeDefaults.ExtraLarge),) {
         Box(
             modifier = Modifier.padding(20.dp)
@@ -181,7 +182,7 @@ fun Eventssss(modifier: Modifier = Modifier) {
     val events = listOf(
         Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
         Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
+       // Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
     )
     val intervalMillis: Long = 5000
     val focusRequesters = remember { events.map { FocusRequester() } }
@@ -196,8 +197,9 @@ fun Eventssss(modifier: Modifier = Modifier) {
     }
 
     LazyRow(
-        modifier = modifier.fillMaxWidth().padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(16.dp)
     ) {
         itemsIndexed(events) { index, event ->
             EventItemNew(
