@@ -13,10 +13,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.example.facultyofexactscience.ui.theme.textColor
 
 @Composable
-fun Header(name: String = "",
-           icon: Int) {
+fun Header(name: String,
+           icon: Int?) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -25,14 +26,15 @@ fun Header(name: String = "",
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(icon),
+            painter = painterResource(id = icon!!),
             contentDescription = "Logo",
-            modifier = Modifier.size(90.dp)
+            modifier = Modifier.size(90.dp),
         )
         Text(
             name,
             style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            color = textColor
 
         )
     }

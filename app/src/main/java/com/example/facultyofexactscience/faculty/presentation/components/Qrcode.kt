@@ -2,12 +2,15 @@ package com.example.facultyofexactscience.faculty.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,53 +20,106 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.tv.material3.ShapeDefaults
+import androidx.tv.material3.Icon
+import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.ui.theme.goldenYellow
+import com.example.facultyofexactscience.ui.theme.textColor
 
 @Composable
 fun Qrcode(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Row(
+        modifier = modifier
+            .clip(MaterialTheme.shapes.large)
+            .fillMaxWidth()
+            .background(goldenYellow)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = "Social Media",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold
-        )
+        Column(
+            modifier = Modifier
+              //  .fillMaxHeight()
+                .weight(1f)
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.facebook),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                    tint = textColor
+                )
+                Text(
+                    text = "Facebook",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = textColor
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.website),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                    tint = textColor
+                )
+                Text(
+                    text = "Website.com",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = textColor
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.instagram),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp),
+                    tint = textColor
+                )
+                Text(
+                    text = "instagram",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = textColor
+                )
+            }
+        }
         Box(
             modifier = Modifier
-                .width(150.dp)
-                .height(150.dp)
-                .clip(ShapeDefaults.Medium)
-                .background(Color(0xFF34693F))
-                .padding(8.dp)
-            ,
+                .clip(MaterialTheme.shapes.medium)
+                .background(Color.White)
+                .padding(8.dp),
+             //   .align(Alignment.CenterVertically),
             contentAlignment = Alignment.Center
-        ){
-            Box(
-                modifier = Modifier
-                    .width(130.dp)
-                    .height(130.dp)
-                    .clip(ShapeDefaults.Small)
-                    .background(Color.White)
-                    .padding(8.dp)
-            ) {
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.qrcode_s_e),
                 contentDescription = "QR",
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
             )
-            }
         }
     }
+
 }
 
 @Preview
 @Composable
 private fun QrCodePrev() {
 
-    Qrcode()
+    Qrcode(
+        modifier = Modifier.height(150.dp)
+    )
 }

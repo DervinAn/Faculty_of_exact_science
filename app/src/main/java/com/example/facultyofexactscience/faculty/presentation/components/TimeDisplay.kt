@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.example.facultyofexactscience.ui.theme.textColor
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -43,13 +44,15 @@ fun TimeDisplay() {
     ) {
         Text(
             text = currentTime,
-           style = MaterialTheme.typography.displayMedium,
+           style = MaterialTheme.typography.displayLarge,
             fontWeight = FontWeight.Bold,
+            color = textColor
         )
         Text(
             text = currentDate,
-            style = MaterialTheme.typography.titleMedium,
-          //  fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Medium,
+            color = textColor
         )
     }
 }

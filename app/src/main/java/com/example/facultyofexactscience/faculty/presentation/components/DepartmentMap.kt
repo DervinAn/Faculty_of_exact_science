@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.ui.theme.textColor
 
 @Composable
 fun DepartmentMap() {
@@ -31,7 +32,8 @@ fun DepartmentMap() {
         Text(
             "Department Map",
             style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            color = textColor
         )
         Box(
             modifier = Modifier
