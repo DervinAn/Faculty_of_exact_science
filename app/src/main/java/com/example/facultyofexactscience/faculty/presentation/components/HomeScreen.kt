@@ -69,8 +69,6 @@ fun Container() {
             ) {
                 Events(
                     modifier = Modifier.weight(0.9f)
-//                    events = sampleEvents,
-//                    intervalMillis = 5000
                 )
                 Contribution(contributorsImage,
                     modifier = Modifier.weight(0.45f)

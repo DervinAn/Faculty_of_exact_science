@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,8 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -111,18 +111,17 @@ import kotlinx.coroutines.delay
 fun EventItemNew(
     event: Event,
     modifier: Modifier = Modifier,
-    focusRequester: FocusRequester? = null,
-    isFocused: Boolean = false
-) {
+    isSelected: Boolean,
+
+    ) {
     Card(
         onClick = {},
         modifier = modifier
             .width(125.dp)
             .aspectRatio(CardDefaults.VerticalImageAspectRatio)
             .focusable() // Make the card focusable
-            .then(
-                if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier
-            ), border = CardDefaults.border(
+            ,
+        border = CardDefaults.border(
             focusedBorder = Border(
                 border = BorderStroke(width = 3.dp, color = border),
                 shape = ShapeDefaults.ExtraLarge,
@@ -132,12 +131,12 @@ fun EventItemNew(
                 shape = ShapeDefaults.ExtraLarge
             )
         ), colors = CardDefaults.colors(
-            containerColor = containerColor,
+            containerColor = if (isSelected) Color(0xFF34693F) else containerColor, // Green if selected
             focusedContainerColor = focusedContainerColor,
-            contentColor = contentColor,
+            contentColor = if (isSelected) Color.White else contentColor, // White text if selected
             focusedContentColor = focusedContentColor
         ),
-        scale = CardDefaults.scale(focusedScale = if (isFocused) 1.02f else 1f),
+        scale = CardDefaults.scale(focusedScale = if (isSelected) 1.02f else 1f),
         shape = CardDefaults.shape(ShapeDefaults.ExtraLarge),) {
         Box(
             modifier = Modifier.padding(16.dp)
@@ -181,39 +180,44 @@ fun EventItemNew(
     }
 }
 
+
 @Composable
 fun Events(modifier: Modifier = Modifier) {
     val events = listOf(
-        Event("Galactic Invasion Begins", "Join the fight against the alien insect fleet!", "Nov 1", Time("10", "AM")),
-        Event("Boss Battle:Queen Galaga", "Face off against the fearsome Queen Galaga!", "Nov 5", Time("3", "PM")),
-        Event("Fighter Challenge", "Unlock the secret of the dual fighter ships!", "Nov 10", Time("12", "PM")),
-        Event("I_develop Challenge", "Unlock the secret of the dual fighter ships!", "Nov 10", Time("12", "PM")),
-        Event("I_develop Meeting", "Un", "Nov 10", Time("12", "PM")),
-        Event("Faculty", "Unlock the secret of the dual fighter ships" +
-                "e off against the fearsome Queen Galaga!!", "Nov 10", Time("12", "PM")),
+        Event("Event Title 1", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
+        Event("Event Title 2", "Another event description.", "Dec 6", Time("3", "PM")),
+        Event("Event Title 3", "More details about this event.", "Dec 7", Time("6", "PM")),
+        Event("Event Title 4", "Final event for the list.", "Dec 8", Time("9", "AM"))
     )
-    val intervalMillis: Long = 5000
-    val focusRequesters = remember { events.map { FocusRequester() } }
+
+    val listState = rememberLazyListState()
     var selectedIndex by remember { mutableIntStateOf(0) }
+    val intervalMillis: Long = 5000  // Auto-scroll every 5 seconds
 
     LaunchedEffect(Unit) {
         while (true) {
             delay(intervalMillis)
-            selectedIndex = (selectedIndex + 1) % events.size
-            focusRequesters[selectedIndex].requestFocus()
+            selectedIndex = (selectedIndex + 1) % events.size  // Cycle through items
+
+            if (selectedIndex == 0) {
+                // Smoothly scroll back to start when reaching the last item
+                listState.scrollToItem(0)
+            } else {
+                listState.animateScrollToItem(selectedIndex)
+            }
         }
     }
 
     LazyRow(
         modifier = modifier.fillMaxWidth(),
+        state = listState,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(16.dp)
     ) {
         itemsIndexed(events) { index, event ->
             EventItemNew(
                 event = event,
-                focusRequester = focusRequesters[index],
-                isFocused = selectedIndex == index
+                isSelected = selectedIndex == index  // Pass selection state
             )
         }
     }
@@ -221,8 +225,13 @@ fun Events(modifier: Modifier = Modifier) {
 
 
 
+
 @Preview
 @Composable
 private fun Hehehehehhe() {
+  /**  EventItemNew(
+        event = Event("Event 1", "Lorem ipsum dolor sit amet, conslit.", "Feb", "21"),
+        modifier = Modifier
+    )*/
     Events()
 }
