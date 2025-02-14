@@ -33,7 +33,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Main() {
-    Box {
+    Box (
+        modifier = Modifier.fillMaxSize()
+    ){
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -44,17 +46,10 @@ fun Main() {
 }
 
 @Preview(
-   device = Devices.TV_720p,
-    showBackground = true
-)
-@Composable
-fun GreetingPreview() {
-    FacultyOfExactScienceTheme {
-        Main()
-    }
-}
-@Preview(device = TV_1080p,
-    showBackground = true
+    name = "TV Preview",
+    showBackground = true,
+    widthDp = 1080,
+    heightDp = 720
 )
 @Composable
 fun GreetingPreviedw() {

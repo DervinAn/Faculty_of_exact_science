@@ -27,6 +27,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.tv.material3.Border
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
@@ -116,7 +117,7 @@ fun EventItemNew(
     Card(
         onClick = {},
         modifier = modifier
-            .width(150.dp)
+            .width(125.dp)
             .aspectRatio(CardDefaults.VerticalImageAspectRatio)
             .focusable() // Make the card focusable
             .then(
@@ -139,7 +140,7 @@ fun EventItemNew(
         scale = CardDefaults.scale(focusedScale = if (isFocused) 1.02f else 1f),
         shape = CardDefaults.shape(ShapeDefaults.ExtraLarge),) {
         Box(
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Column {
                 Column(
@@ -150,7 +151,8 @@ fun EventItemNew(
                 ) {
                     Text(
                         text = event.date,
-                        style = MaterialTheme.typography.headlineSmall,
+//                        style = MaterialTheme.typography.headlineSmall,,
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(4.dp))
@@ -182,9 +184,13 @@ fun EventItemNew(
 @Composable
 fun Events(modifier: Modifier = Modifier) {
     val events = listOf(
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
-        Event("Event Title", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
+        Event("Galactic Invasion Begins", "Join the fight against the alien insect fleet!", "Nov 1", Time("10", "AM")),
+        Event("Boss Battle:Queen Galaga", "Face off against the fearsome Queen Galaga!", "Nov 5", Time("3", "PM")),
+        Event("Fighter Challenge", "Unlock the secret of the dual fighter ships!", "Nov 10", Time("12", "PM")),
+        Event("I_develop Challenge", "Unlock the secret of the dual fighter ships!", "Nov 10", Time("12", "PM")),
+        Event("I_develop Meeting", "Un", "Nov 10", Time("12", "PM")),
+        Event("Faculty", "Unlock the secret of the dual fighter ships" +
+                "e off against the fearsome Queen Galaga!!", "Nov 10", Time("12", "PM")),
     )
     val intervalMillis: Long = 5000
     val focusRequesters = remember { events.map { FocusRequester() } }
@@ -218,9 +224,5 @@ fun Events(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun Hehehehehhe() {
-  /**  EventItemNew(
-        event = Event("Event 1", "Lorem ipsum dolor sit amet, conslit.", "Feb", "21"),
-        modifier = Modifier
-    )*/
     Events()
 }

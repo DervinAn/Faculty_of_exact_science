@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.example.facultyofexactscience.faculty.presentation.components.caroussel.Carousel
 import com.example.facultyofexactscience.faculty.presentation.components.event.Events
 import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.faculty.domain.Event
+import com.example.facultyofexactscience.faculty.domain.Time
 
 @Composable
 fun Container() {
@@ -28,6 +30,13 @@ fun Container() {
         R.drawable.utmb_last,
         R.drawable.id_logo,
         R.drawable.f_e_s,
+    )
+    val sampleEvents = listOf(
+        Event("Event Title 1", "Description 1", "Dec 5", Time("12", "PM")),
+        Event("Event Title 2", "Description 2", "Dec 6", Time("3", "PM")),
+        Event("Event Title 3", "Description 3", "Dec 7", Time("6", "PM")),
+        Event("Event Title 2", "Description 2", "Dec 6", Time("3", "PM")),
+        Event("Event Title 3", "Description 3", "Dec 7", Time("6", "PM"))
     )
     Box(
         modifier = Modifier
@@ -49,9 +58,9 @@ fun Container() {
         ) {
             Carousel(
                 modifier = Modifier
-                    .fillMaxHeight(0.7f)
+                    .fillMaxHeight(0.6f)
                     .fillMaxWidth()
-                )
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -59,17 +68,20 @@ fun Container() {
                 , verticalAlignment = Alignment.Bottom
             ) {
                 Events(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(0.9f)
+//                    events = sampleEvents,
+//                    intervalMillis = 5000
                 )
                 Contribution(contributorsImage,
-                    modifier = Modifier.weight(0.3f)
+                    modifier = Modifier.weight(0.45f)
                 )
-
             }
 
         }
     }
 }
+
+
 
 @Preview(
     name = "TV Preview",
