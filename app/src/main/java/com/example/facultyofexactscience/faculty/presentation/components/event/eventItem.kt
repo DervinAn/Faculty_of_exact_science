@@ -20,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +43,7 @@ import com.example.facultyofexactscience.ui.theme.contentColor
 import com.example.facultyofexactscience.ui.theme.focusedContainerColor
 import com.example.facultyofexactscience.ui.theme.focusedContentColor
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**fun EventItem(
     event: Event,
@@ -187,23 +189,27 @@ fun Events(modifier: Modifier = Modifier) {
         Event("Event Title 1", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
         Event("Event Title 2", "Another event description.", "Dec 6", Time("3", "PM")),
         Event("Event Title 3", "More details about this event.", "Dec 7", Time("6", "PM")),
-        Event("Event Title 4", "Final event for the list.", "Dec 8", Time("9", "AM"))
+        Event("Event Title 4", "Final event for the list.", "Dec 8", Time("9", "AM")),
+        Event("Event Title 5", "Description for Event 5.", "Dec 9", Time("11", "AM")),
+        Event("Event Title 6", "Description for Event 6.", "Dec 10", Time("2", "PM")),
+        Event("Event Title 7", "Description for Event 7.", "Dec 11", Time("5", "PM")),
+        Event("Event Title 8", "Description for Event 8.", "Dec 12", Time("8", "AM")),
+        Event("Event Title 9", "Description for Event 9.", "Dec 13", Time("10", "AM")),
     )
 
     val listState = rememberLazyListState()
     var selectedIndex by remember { mutableIntStateOf(0) }
-    val intervalMillis: Long = 5000  // Auto-scroll every 5 seconds
+    val coroutineScope = rememberCoroutineScope()
+    val intervalMillis: Long = 3000  // Auto-scroll every 3 seconds for a smoother effect
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(selectedIndex) {
         while (true) {
             delay(intervalMillis)
-            selectedIndex = (selectedIndex + 1) % events.size  // Cycle through items
+            val nextIndex = (selectedIndex + 1) % events.size
+            selectedIndex = nextIndex
 
-            if (selectedIndex == 0) {
-                // Smoothly scroll back to start when reaching the last item
-                listState.scrollToItem(0)
-            } else {
-                listState.animateScrollToItem(selectedIndex)
+            coroutineScope.launch {
+                listState.animateScrollToItem(nextIndex, scrollOffset = 0)
             }
         }
     }
@@ -222,7 +228,6 @@ fun Events(modifier: Modifier = Modifier) {
         }
     }
 }
-
 
 
 
