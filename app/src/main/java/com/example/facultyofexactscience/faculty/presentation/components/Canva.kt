@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.facultyofexactscience.ui.theme.canvaColor
+import com.example.facultyofexactscience.ui.theme.canvasColor
 
 @Composable
 fun Canva(modifier: Modifier = Modifier) {
@@ -35,7 +35,7 @@ fun Canva(modifier: Modifier = Modifier) {
 
         drawPath(
             path = wavePath,
-            color = canvaColor,
+            color = canvasColor,
             style = Fill
         )
     }
@@ -88,7 +88,7 @@ fun Canva1(modifier: Modifier = Modifier) {
 
         drawPath(
             path = wavePath,
-            color = canvaColor,
+            color = canvasColor,
             style = Fill
         )
     }

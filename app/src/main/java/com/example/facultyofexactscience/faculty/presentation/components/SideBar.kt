@@ -58,7 +58,7 @@ fun Sidebar() {
             fontWeight = FontWeight.Bold
         )
         TimeDisplay()
-       // DepartmentMap()
+        DepartmentMap()
         Quotes(
             modifier = Modifier
         )
@@ -80,7 +80,6 @@ private fun SideBarPrev() {
             .background(Color.White)
     ) {
         Sidebar()
-        // Container()
     }
 
 }
