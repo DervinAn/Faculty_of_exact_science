@@ -138,7 +138,7 @@ fun EventItemNew(
             contentColor = if (isSelected) Color.White else contentColor, // White text if selected
             focusedContentColor = focusedContentColor
         ),
-        scale = CardDefaults.scale(focusedScale = if (isSelected) 1.02f else 1f),
+        scale = CardDefaults.scale(scale = if (isSelected) 1.03f else 1f),
         shape = CardDefaults.shape(ShapeDefaults.ExtraLarge),) {
         Box(
             modifier = Modifier.padding(16.dp)
@@ -200,7 +200,7 @@ fun Events(modifier: Modifier = Modifier) {
     val listState = rememberLazyListState()
     var selectedIndex by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
-    val intervalMillis: Long = 3000  // Auto-scroll every 3 seconds for a smoother effect
+    val intervalMillis: Long = 3000
 
     LaunchedEffect(selectedIndex) {
         while (true) {
