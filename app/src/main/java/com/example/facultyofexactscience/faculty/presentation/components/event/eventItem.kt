@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -121,7 +122,7 @@ fun EventItemNew(
         modifier = modifier
             .width(125.dp)
             .aspectRatio(CardDefaults.VerticalImageAspectRatio)
-            .focusable() // Make the card focusable
+            .focusable()
             ,
         border = CardDefaults.border(
             focusedBorder = Border(
@@ -133,9 +134,9 @@ fun EventItemNew(
                 shape = ShapeDefaults.ExtraLarge
             )
         ), colors = CardDefaults.colors(
-            containerColor = if (isSelected) Color(0xFF34693F) else containerColor, // Green if selected
+            containerColor = if (isSelected) Color(0xFF34693F) else containerColor,
             focusedContainerColor = focusedContainerColor,
-            contentColor = if (isSelected) Color.White else contentColor, // White text if selected
+            contentColor = if (isSelected) Color.White else contentColor,
             focusedContentColor = focusedContentColor
         ),
         scale = CardDefaults.scale(scale = if (isSelected) 1.03f else 1f),
@@ -146,20 +147,23 @@ fun EventItemNew(
             Column {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
                         text = event.date,
 //                        style = MaterialTheme.typography.headlineSmall,,
                         fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis, /** Adds "..." at the end if it's too long**/
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "event.time",
-                        style = MaterialTheme.typography.titleMedium
+                        text = "Time: "+event.time.startingTime+" "+event.time.endingTime,
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis, /** Adds "..." at the end if it's too long**/
                     )
                 }
                 Column(
@@ -169,12 +173,16 @@ fun EventItemNew(
                     Text(
                         text = event.title,
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis, /** Adds "..." at the end if it's too long**/
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = event.description,
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis, /** Adds "..." at the end if it's too long**/
                     )
                 }
             }
@@ -190,10 +198,15 @@ fun Events(modifier: Modifier = Modifier) {
         Event("Event Title 2", "Another event description.", "Dec 6", Time("3", "PM")),
         Event("Event Title 3", "More details about this event.", "Dec 7", Time("6", "PM")),
         Event("Event Title 4", "Final event for the list.", "Dec 8", Time("9", "AM")),
-        Event("Event Title 5", "Description for Event 5.", "Dec 9", Time("11", "AM")),
-        Event("Event Title 6", "Description for Event 6.", "Dec 10", Time("2", "PM")),
-        Event("Event Title 7", "Description for Event 7.", "Dec 11", Time("5", "PM")),
-        Event("Event Title 8", "Description for Event 8.", "Dec 12", Time("8", "AM")),
+        Event("Event Title 5", "Description for Event 5," +
+                "More details about this event.", "Dec 9", Time("11", "AM")),
+        Event("Event Title 6", "Description for Event 6," +
+                "More details about this event.", "Dec 10", Time("2", "PM")),
+        Event("Event Title 7", "Description for Event 7," +
+                "More details about this event.", "Dec 11", Time("5", "PM")),
+        Event("Event Title 8", "Description for Event 8," +
+                "More details about this event," +
+                "More details about this event.", "Dec 12", Time("8", "AM")),
         Event("Event Title 9", "Description for Event 9.", "Dec 13", Time("10", "AM")),
     )
 
