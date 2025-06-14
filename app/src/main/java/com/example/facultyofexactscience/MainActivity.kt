@@ -8,17 +8,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Devices.TV_1080p
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.tv.material3.Surface
 import com.example.facultyofexactscience.faculty.presentation.components.Container
 import com.example.facultyofexactscience.faculty.presentation.components.Sidebar
 import com.example.facultyofexactscience.ui.theme.FacultyOfExactScienceTheme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         setContent {
             FacultyOfExactScienceTheme {
                 Surface(

@@ -18,11 +18,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.faculty.presentation.FacultyViewModel
 import com.example.facultyofexactscience.faculty.presentation.components.caroussel.Carousel
 import com.example.facultyofexactscience.faculty.presentation.components.event.Events
-import com.example.facultyofexactscience.R
-import com.example.facultyofexactscience.faculty.domain.Event
-import com.example.facultyofexactscience.faculty.domain.Time
 
 @Composable
 fun Container() {
@@ -31,13 +31,8 @@ fun Container() {
         R.drawable.id_logo,
         R.drawable.f_e_s,
     )
-    val sampleEvents = listOf(
-        Event("Event Title 1", "Description 1", "Dec 5", Time("12", "PM")),
-        Event("Event Title 2", "Description 2", "Dec 6", Time("3", "PM")),
-        Event("Event Title 3", "Description 3", "Dec 7", Time("6", "PM")),
-        Event("Event Title 2", "Description 2", "Dec 6", Time("3", "PM")),
-        Event("Event Title 3", "Description 3", "Dec 7", Time("6", "PM"))
-    )
+    val viewModel: FacultyViewModel = viewModel()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +63,8 @@ fun Container() {
                 , verticalAlignment = Alignment.Bottom
             ) {
                 Events(
-                    modifier = Modifier.weight(0.9f)
+                    modifier = Modifier.weight(0.9f),
+                    viewModel = viewModel,
                 )
                 Contribution(contributorsImage,
                     modifier = Modifier.weight(0.45f)

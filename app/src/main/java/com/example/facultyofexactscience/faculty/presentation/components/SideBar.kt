@@ -18,14 +18,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.example.facultyofexactscience.faculty.presentation.FacultyViewModel
 import com.example.facultyofexactscience.ui.theme.border
 import com.example.facultyofexactscience.ui.theme.sideBarBackground
 import com.example.facultyofexactscience.ui.theme.textColor
 
 @Composable
 fun Sidebar() {
+    val viewModel: FacultyViewModel = viewModel()
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -60,7 +63,7 @@ fun Sidebar() {
         TimeDisplay()
         DepartmentMap()
         Quotes(
-            modifier = Modifier
+            viewModel
         )
         Qrcode(
             modifier = Modifier

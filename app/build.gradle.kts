@@ -3,12 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
-    kotlin("kapt") // Add this line for Kotlin annotation processing
+    kotlin("kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.example.facultyofexactscience"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.facultyofexactscience"
@@ -62,15 +63,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
-        implementation(libs.ktor.client.core)
-        implementation(libs.ktor.client.cio)
+// Firebase Core
+    implementation("com.google.firebase:firebase-common-ktx:20.4.1")
 
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.client.logging)
+// Firestore KTX
+    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
+
+// Coroutines support for Firebase Tasks (needed for `await()`)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
 
-        // KotlinX Serialization
+
+
+
+    // KotlinX Serialization
         implementation(libs.kotlinx.serialization.json)
 
 

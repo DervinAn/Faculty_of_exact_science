@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.tv.material3.Border
@@ -37,7 +37,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.ShapeDefaults
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.faculty.domain.Event
-import com.example.facultyofexactscience.faculty.domain.Time
+import com.example.facultyofexactscience.faculty.presentation.FacultyViewModel
 import com.example.facultyofexactscience.ui.theme.border
 import com.example.facultyofexactscience.ui.theme.containerColor
 import com.example.facultyofexactscience.ui.theme.contentColor
@@ -190,25 +190,11 @@ fun EventItemNew(
     }
 }
 
-
 @Composable
-fun Events(modifier: Modifier = Modifier) {
-    val events = listOf(
-        Event("Event Title 1", "Lorem ipsum dolor sit amet.", "Dec 5", Time("12", "PM")),
-        Event("Event Title 2", "Another event description.", "Dec 6", Time("3", "PM")),
-        Event("Event Title 3", "More details about this event.", "Dec 7", Time("6", "PM")),
-        Event("Event Title 4", "Final event for the list.", "Dec 8", Time("9", "AM")),
-        Event("Event Title 5", "Description for Event 5," +
-                "More details about this event.", "Dec 9", Time("11", "AM")),
-        Event("Event Title 6", "Description for Event 6," +
-                "More details about this event.", "Dec 10", Time("2", "PM")),
-        Event("Event Title 7", "Description for Event 7," +
-                "More details about this event.", "Dec 11", Time("5", "PM")),
-        Event("Event Title 8", "Description for Event 8," +
-                "More details about this event," +
-                "More details about this event.", "Dec 12", Time("8", "AM")),
-        Event("Event Title 9", "Description for Event 9.", "Dec 13", Time("10", "AM")),
-    )
+fun Events(viewModel: FacultyViewModel, modifier: Modifier = Modifier) {
+    val events by viewModel.events.collectAsState()
+
+    if (events.isEmpty()) return
 
     val listState = rememberLazyListState()
     var selectedIndex by remember { mutableIntStateOf(0) }
@@ -218,11 +204,9 @@ fun Events(modifier: Modifier = Modifier) {
     LaunchedEffect(selectedIndex) {
         while (true) {
             delay(intervalMillis)
-            val nextIndex = (selectedIndex + 1) % events.size
-            selectedIndex = nextIndex
-
+            selectedIndex = (selectedIndex + 1) % events.size
             coroutineScope.launch {
-                listState.animateScrollToItem(nextIndex, scrollOffset = 0)
+                listState.animateScrollToItem(selectedIndex)
             }
         }
     }
@@ -234,22 +218,18 @@ fun Events(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(16.dp)
     ) {
         itemsIndexed(events) { index, event ->
-            EventItemNew(
-                event = event,
-                isSelected = selectedIndex == index  // Pass selection state
-            )
+            EventItemNew(event = event, isSelected = selectedIndex == index)
         }
     }
 }
 
 
-
-@Preview
-@Composable
-private fun Hehehehehhe() {
-  /**  EventItemNew(
-        event = Event("Event 1", "Lorem ipsum dolor sit amet, conslit.", "Feb", "21"),
-        modifier = Modifier
-    )*/
-    Events()
-}
+//@Preview
+//@Composable
+//private fun Hehehehehhe() {
+//  /**  EventItemNew(
+//        event = Event("Event 1", "Lorem ipsum dolor sit amet, conslit.", "Feb", "21"),
+//        modifier = Modifier
+//    )*/
+//    Events()
+//}
