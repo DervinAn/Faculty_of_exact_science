@@ -2,11 +2,17 @@ package com.example.facultyofexactscience.faculty.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,15 +26,38 @@ import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
 import com.example.facultyofexactscience.faculty.presentation.FacultyViewModel
 import com.example.facultyofexactscience.ui.theme.quoteCardColor
-import androidx.compose.runtime.getValue
 import com.example.facultyofexactscience.ui.theme.quoteIconColor
 import com.example.facultyofexactscience.ui.theme.textColor
+import kotlinx.coroutines.delay
 
 @Composable
 fun Quotes(viewModel: FacultyViewModel) {
     val quotes by viewModel.quotes.collectAsState()
 
-    val quote = quotes.firstOrNull() ?: return
+    if (quotes.isEmpty()) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("Loading quote...", color = textColor)
+        }
+        return
+    }
+
+    // State to track the current index
+    var currentIndex by remember { mutableIntStateOf(0) }
+
+    // Launch a coroutine that updates the index every 10 seconds
+    LaunchedEffect(quotes) {
+        while (true) {
+            delay(10_000L)
+            currentIndex = (currentIndex + 1) % quotes.size
+        }
+    }
+
+    val quote = quotes[currentIndex]
 
     Column(
         modifier = Modifier
@@ -54,11 +83,3 @@ fun Quotes(viewModel: FacultyViewModel) {
         )
     }
 }
-
-
-//@Preview
-//@Composable
-//private fun QuotesPrev() {
-//    Quotes()
-//
-//}

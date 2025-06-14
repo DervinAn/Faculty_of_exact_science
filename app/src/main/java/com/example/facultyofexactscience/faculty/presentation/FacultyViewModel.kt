@@ -1,14 +1,12 @@
 package com.example.facultyofexactscience.faculty.presentation
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.facultyofexactscience.faculty.data.FirebaseRepository
 import com.example.facultyofexactscience.faculty.domain.Event
 import com.example.facultyofexactscience.faculty.domain.Quotes
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class FacultyViewModel : ViewModel() {
 
@@ -20,22 +18,22 @@ class FacultyViewModel : ViewModel() {
     private val _events = MutableStateFlow<List<Event>>(emptyList())
     val events: StateFlow<List<Event>> = _events
 
+    private var quotesListener: ListenerRegistration? = null
+    private var eventsListener: ListenerRegistration? = null
+
     init {
-        loadQuotes()
-        loadEvents()
-    }
+        quotesListener = repository.fetchQuotes { updatedQuotes ->
+            _quotes.value = updatedQuotes
+        }
 
-    @SuppressLint("NewApi")
-    private fun loadQuotes() {
-        viewModelScope.launch {
-            _quotes.value = repository.fetchQuotes()
+        eventsListener = repository.fetchEvents { updatedEvents ->
+            _events.value = updatedEvents
         }
     }
 
-    @SuppressLint("NewApi")
-    private fun loadEvents() {
-        viewModelScope.launch {
-            _events.value = repository.fetchEvents()
-        }
+    override fun onCleared() {
+        quotesListener?.remove()
+        eventsListener?.remove()
+        super.onCleared()
     }
 }
