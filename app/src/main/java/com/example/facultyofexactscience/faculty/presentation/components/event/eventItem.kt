@@ -120,7 +120,7 @@ fun EventItemNew(
     Card(
         onClick = {},
         modifier = modifier
-            .width(125.dp)
+            .width(170.dp)
             .aspectRatio(CardDefaults.VerticalImageAspectRatio)
             .focusable()
             ,
@@ -199,7 +199,7 @@ fun Events(viewModel: FacultyViewModel, modifier: Modifier = Modifier) {
     val listState = rememberLazyListState()
     var selectedIndex by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
-    val intervalMillis: Long = 3000
+    val intervalMillis: Long = 5000
 
     LaunchedEffect(selectedIndex) {
         while (true) {
