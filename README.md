@@ -3,8 +3,10 @@
 > A Smart TV display app for the Faculty of Exact Sciences – University of Bechar  
 > Built using **Jetpack Compose** and **Firebase**, this app automatically showcases quotes, upcoming events, and institutional links on a dedicated display screen.
 
+
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/df3af1f5-4695-44b7-94d4-be612fcac220" alt="App Preview" width="600"/>
+  <img src="https://github.com/user-attachments/assets/df3af1f5-4695-44b7-94d4-be612fcac220" alt="App Preview" width="1200"/>
 </p>
 
 ---
