@@ -2,9 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("plugin.serialization")
-    kotlin("kapt")
-    id("com.google.gms.google-services")
+    alias(libs.plugins.kotlin.serialization)   // ✅ Kotlin serialization plugin
 }
 
 android {
@@ -18,6 +16,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
+        // ✅ Add your API base URL here (please confirm final value)
+        buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8000\"")
     }
 
     buildTypes {
@@ -28,7 +29,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            // optional: enable extra logging flags if desired
+        }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -38,47 +43,47 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+
+    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.tv.foundation)
-    implementation(libs.androidx.tv.material.v100)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.tracing.perfetto.handshake)
-    implementation(libs.volley)
-    implementation(libs.transport.runtime)
+    debugImplementation(libs.androidx.ui.tooling)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // TV Compose
+    implementation(libs.androidx.tv.foundation)
+    implementation(libs.androidx.tv.material.v100)
 
-// Firebase Core
-    implementation("com.google.firebase:firebase-common-ktx:20.4.1")
+    // Lifecycle + Activity
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-// Firestore KTX
-    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
+    // Optional utilities you already had
+    implementation(libs.androidx.tracing.perfetto.handshake)
 
-// Coroutines support for Firebase Tasks (needed for `await()`)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    // ❌ Remove Volley & Transport if unused
+    // implementation(libs.volley)
+    // implementation(libs.transport.runtime)
 
+    // ✅ KotlinX Serialization
+    implementation(libs.kotlinx.serialization.json)
 
-
-
-
-    // KotlinX Serialization
-        implementation(libs.kotlinx.serialization.json)
-
-
+    // ✅ Ktor HTTP client stack
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)                // Android engine
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
 }

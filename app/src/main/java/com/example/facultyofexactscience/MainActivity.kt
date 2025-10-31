@@ -13,12 +13,10 @@ import androidx.tv.material3.Surface
 import com.example.facultyofexactscience.faculty.presentation.components.Container
 import com.example.facultyofexactscience.faculty.presentation.components.Sidebar
 import com.example.facultyofexactscience.ui.theme.FacultyOfExactScienceTheme
-import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
         setContent {
             FacultyOfExactScienceTheme {
                 Surface(
@@ -49,7 +47,7 @@ fun Main() {
     name = "TV Preview",
     showBackground = true,
     widthDp = 1080,
-    heightDp = 720
+    heightDp = 720,
 )
 @Composable
 fun GreetingPreviedw() {

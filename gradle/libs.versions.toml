@@ -4,56 +4,82 @@ kotlin = "2.0.0"
 coreKtx = "1.13.1"
 appcompat = "1.7.0"
 composeBom = "2024.04.01"
-kotlinxCoroutinesPlayServices = "1.7.3"
-kotlinxSerializationJson = "1.6.3"
-ktor = "2.3.3"  # ✅ Define a single version for all Ktor dependencies
-lifecycleViewmodelCompose = "<version>"
-tvFoundation = "1.0.0-alpha07"
-tvMaterial = "1.0.0-alpha07"
+
+# Lifecycle
 lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.3"
-material3Android = "1.3.1"
-tracingPerfettoHandshake = "1.0.0"
+lifecycleViewmodelCompose = "2.8.6"
+
+# TV Compose
+tvFoundation = "1.0.0-alpha07"
+tvMaterial = "1.0.0"
 tvMaterialVersion = "1.0.0"
-volley = "1.2.1"
-transportRuntime = "4.0.0"
-google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
+
+# Activity
+activityCompose = "1.9.3"
+
+# Material3 (you can keep if used)
+material3Android = "1.3.1"
+
+# Tracing (optional)
+tracingPerfettoHandshake = "1.0.0"
+
+# KotlinX & Ktor
+kotlinxSerializationJson = "1.6.3"
+ktor = "2.3.3"
+
+# (Removed)
+# kotlinxCoroutinesPlayServices = "1.7.3"
+# volley = "1.2.1"
+# transportRuntime = "4.0.0"
+# google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+# Compose BOM & modules
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
-androidx-tv-material-v100 = { module = "androidx.tv:tv-material", version.ref = "tvMaterialVersion" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+# TV
 androidx-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "tvFoundation" }
 androidx-tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "tvMaterial" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
-androidx-tracing-perfetto-handshake = { group = "androidx.tracing", name = "tracing-perfetto-handshake", version.ref = "tracingPerfettoHandshake" }
-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
-kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
-volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+androidx-tv-material-v100 = { module = "androidx.tv:tv-material", version.ref = "tvMaterialVersion" }
 
-# ✅ Correct Ktor Dependencies (now all use `ktor` version)
+# Lifecycle + Activity
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# Material3 (if needed)
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+
+# Tracing (optional)
+androidx-tracing-perfetto-handshake = { group = "androidx.tracing", name = "tracing-perfetto-handshake", version.ref = "tracingPerfettoHandshake" }
+
+# KotlinX Serialization
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+# ✅ Ktor (all share a single version)
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
-# ✅ Correct KotlinX Serialization
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
+# (Removed libs that were unused / Firebase related)
+# firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
+# kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
+# volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+# transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
