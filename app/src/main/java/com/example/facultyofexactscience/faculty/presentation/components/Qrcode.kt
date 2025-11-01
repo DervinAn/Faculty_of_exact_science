@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -114,11 +115,55 @@ fun Qrcode(modifier: Modifier = Modifier) {
 
 }
 
-@Preview
 @Composable
-private fun QrCodePrev() {
-
-    Qrcode(
-        modifier = Modifier.height(150.dp)
-    )
+fun SocialQrPanel(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(goldenYellow)
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            SocialRow(icon = R.drawable.facebook, label = "Facebook")
+            SocialRow(icon = R.drawable.website, label = "Website.com")
+            // SocialRow(icon = R.drawable.instagram, label = "instagram")
+        }
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.White)
+                .padding(8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.qrcode_s_e),
+                contentDescription = "QR",
+                modifier = Modifier.size(80.dp)
+            )
+        }
+    }
+}
+@Composable
+private fun SocialRow(icon: Int, label: String) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = null,
+            modifier = Modifier.size(28.dp),
+            tint = textColor
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Medium,
+            color = textColor
+        )
+    }
 }

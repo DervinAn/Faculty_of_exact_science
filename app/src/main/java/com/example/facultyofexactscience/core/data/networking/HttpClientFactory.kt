@@ -1,5 +1,6 @@
 ﻿package com.example.facultyofexactscience.core.data.networking
 
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -15,9 +16,10 @@ import kotlinx.serialization.json.Json
 
 object HttpClientFactory {
     fun create(engine: HttpClientEngine): HttpClient {
+        Log.d("HttpClientFactory", "create() called")
         return HttpClient(engine) {
             install(Logging) {
-                level = LogLevel.ALL
+                level = LogLevel.INFO
                 logger = Logger.ANDROID
             }
             install(ContentNegotiation) {

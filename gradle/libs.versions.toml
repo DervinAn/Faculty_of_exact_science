@@ -5,6 +5,10 @@ coreKtx = "1.13.1"
 appcompat = "1.7.0"
 composeBom = "2024.04.01"
 
+#coil
+coil = "2.5.0"
+
+
 # Lifecycle
 lifecycleRuntimeKtx = "2.8.6"
 lifecycleViewmodelCompose = "2.8.6"
@@ -72,6 +76,8 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
+#coil
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 # (Removed libs that were unused / Firebase related)
 # firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 # kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }

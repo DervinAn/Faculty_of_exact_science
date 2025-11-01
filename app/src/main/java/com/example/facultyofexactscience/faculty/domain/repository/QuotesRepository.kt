@@ -1,4 +1,5 @@
-﻿package com.example.facultyofexactscience.feature.faculty.domain.repository
+﻿// app/src/main/java/com/example/facultyofexactscience/feature/faculty/domain/repository/QuotesRepository.kt
+package com.example.facultyofexactscience.faculty.domain.repository
 
 import com.example.facultyofexactscience.core.domain.util.EmptyResult
 import com.example.facultyofexactscience.core.domain.util.NetworkError

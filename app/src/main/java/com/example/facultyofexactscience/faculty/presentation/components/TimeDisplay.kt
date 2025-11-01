@@ -1,5 +1,6 @@
 package com.example.facultyofexactscience.faculty.presentation.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.ui.theme.textColor
@@ -19,36 +21,32 @@ import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
 @Composable
 fun TimeDisplay() {
-    var currentTime by remember { mutableStateOf(getCurrentTime()) }
-    var currentDate by remember { mutableStateOf(getCurrentDate()) }
+    var time by remember { mutableStateOf(getCurrentTime()) }
+    var date by remember { mutableStateOf(getCurrentDate()) }
 
     LaunchedEffect(Unit) {
         while (true) {
-            currentTime = getCurrentTime()
-            currentDate = getCurrentDate()
-            delay(1000L)
+            time = getCurrentTime()
+            date = getCurrentDate()
+            delay(1_000L)
         }
     }
+
     Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-         //   .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        //verticalArrangement = Arrangement.spacedBy(6.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = currentTime,
-           style = MaterialTheme.typography.displayLarge,
+            text = time,
+            style = MaterialTheme.typography.displayLarge,
             fontWeight = FontWeight.Bold,
             color = textColor
         )
         Text(
-            text = currentDate,
+            text = date,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Medium,
             color = textColor
         )
     }
@@ -64,9 +62,3 @@ fun getCurrentTime(): String {
     return sdf.format(Date())
 }
 
-@Preview
-@Composable
-private fun TimedisPrev() {
-    TimeDisplay()
-    
-}

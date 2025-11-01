@@ -18,7 +18,7 @@ android {
 
 
         // ✅ Add your API base URL here (please confirm final value)
-        buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8000\"")
+        buildConfigField("String", "BASE_URL", "\"http://192.168.1.13:8000/\"")
     }
 
     buildTypes {
@@ -86,4 +86,7 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
+
+    //Coil
+    implementation(libs.coil.compose)
 }

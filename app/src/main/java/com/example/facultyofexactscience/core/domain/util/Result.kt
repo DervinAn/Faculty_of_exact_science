@@ -28,3 +28,5 @@ inline fun <T, E: Error> Result<T, E>.onError(action: (E) -> Unit): Result<T, E>
     }
 
 typealias EmptyResult<E> = Result<Unit, E>
+
+

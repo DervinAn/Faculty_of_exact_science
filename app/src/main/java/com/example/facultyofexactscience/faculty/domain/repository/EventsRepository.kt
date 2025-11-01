@@ -1,4 +1,4 @@
-﻿package com.example.facultyofexactscience.feature.faculty.domain.repository
+﻿package com.example.facultyofexactscience.faculty.domain.repository
 
 import com.example.facultyofexactscience.core.domain.util.EmptyResult
 import com.example.facultyofexactscience.core.domain.util.NetworkError

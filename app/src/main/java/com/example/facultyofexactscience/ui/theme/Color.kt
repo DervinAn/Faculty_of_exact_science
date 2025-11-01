@@ -24,3 +24,8 @@ val textColor = Color(0xFFF5F5F5)
 val sideBarBackground = Color(0xCC003C3C)
     .copy(0.75f)
 val quoteCardColor = Color(0xFF00715D)
+
+
+// Main background color for the left panel and the overall screen
+val backgroundColor = Color(0xFF1E202B)
+

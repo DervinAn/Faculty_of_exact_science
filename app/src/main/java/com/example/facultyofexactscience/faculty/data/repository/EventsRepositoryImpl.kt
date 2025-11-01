@@ -1,14 +1,14 @@
-﻿package com.example.facultyofexactscience.feature.faculty.data.repository
+﻿package com.example.facultyofexactscience.faculty.data.repository
 
 import com.example.facultyofexactscience.core.domain.util.EmptyResult
 import com.example.facultyofexactscience.core.domain.util.NetworkError
 import com.example.facultyofexactscience.core.domain.util.Result
 import com.example.facultyofexactscience.core.domain.util.asEmptyDataResult
 import com.example.facultyofexactscience.core.domain.util.map
-import com.example.facultyofexactscience.feature.faculty.data.remote.api.FacultyApi
-import com.example.facultyofexactscience.feature.faculty.data.remote.dto.toDomain
-import com.example.facultyofexactscience.feature.faculty.data.remote.dto.toDto
-import com.example.facultyofexactscience.feature.faculty.domain.repository.EventsRepository
+import com.example.facultyofexactscience.faculty.data.remote.api.FacultyApi
+import com.example.facultyofexactscience.faculty.data.remote.dto.toDomain
+import com.example.facultyofexactscience.faculty.data.remote.dto.toDto
+import com.example.facultyofexactscience.faculty.domain.repository.EventsRepository
 import com.example.facultyofexactscience.faculty.domain.Event
 
 class EventsRepositoryImpl(
@@ -29,4 +29,6 @@ class EventsRepositoryImpl(
 
     override suspend fun delete(id: String): EmptyResult<NetworkError> =
         api.deleteEvent(id).asEmptyDataResult()
+
+
 }
