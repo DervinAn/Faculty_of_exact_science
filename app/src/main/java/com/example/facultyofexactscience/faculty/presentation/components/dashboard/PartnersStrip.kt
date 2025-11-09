@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,12 +49,13 @@ fun PartnerRow(
     chipSize: Dp = 72.dp,
 ) {
     Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PartnerChip(logoRes = R.drawable.id_logo, chipSize = chipSize)
         PartnerChip(logoRes = R.drawable.utmb, chipSize = chipSize)
         PartnerChip(logoRes = R.drawable.utmb_f_s_e, chipSize = chipSize)
+        PartnerChip(logoRes = R.drawable.idev, chipSize = chipSize)
     }
 }

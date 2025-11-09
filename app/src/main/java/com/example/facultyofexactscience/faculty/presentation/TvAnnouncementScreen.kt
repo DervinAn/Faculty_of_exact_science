@@ -119,7 +119,10 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                             .weight(0.28f)
                     )
 
-                    PartnerRow()
+                    PartnerRow(
+                        modifier = Modifier.fillMaxWidth()
+
+                    )
                 }
             }
         }
