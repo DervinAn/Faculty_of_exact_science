@@ -1,14 +1,21 @@
 ﻿// app/src/main/java/com/example/facultyofexactscience/faculty/presentation/TvAnnouncementScreen.kt
 package com.example.facultyofexactscience.faculty.presentation
 
-import android.R.attr.delay
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -21,33 +28,21 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
-import androidx.tv.material3.Text
-import com.example.facultyofexactscience.faculty.presentation.components.QuoteCard
-import com.example.facultyofexactscience.faculty.presentation.components.Quotes
-import com.example.facultyofexactscience.faculty.presentation.components.SocialQrPanel
-import com.example.facultyofexactscience.faculty.presentation.components.TimeDisplay
+import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.faculty.presentation.components.LeftSidebar
+import com.example.facultyofexactscience.faculty.presentation.components.dashboard.BackgroundWire
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.EventCarousel
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.HeroBanner
-import com.example.facultyofexactscience.faculty.presentation.components.dashboard.PartnersStrip
-import com.example.facultyofexactscience.faculty.presentation.components.dashboard.SocialPanel
+import com.example.facultyofexactscience.faculty.presentation.components.dashboard.PartnerChip
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.rememberTvDims
 import com.example.facultyofexactscience.ui.theme.border
 import com.example.facultyofexactscience.ui.theme.sideBarBackground
-import kotlinx.coroutines.delay
 
-/**
- * Redesigned to visually match the poster:
- * - Left: centered header/time/date, illustration card, quote, social+QR.
- * - Right: large rounded hero, compact events row, logos strip bottom.
- * Names/args preserved to match existing logic and repositories.
- */
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
-    // ── Data from VM ──
     val heroImages by viewModel.heroImages.collectAsState()
     val heroIdx by viewModel.heroIndex.collectAsState()
-    val heroUrl = heroImages.getOrNull(heroIdx)
     val events by viewModel.events.collectAsState()
     val quotes by viewModel.quotes.collectAsState()
 
@@ -55,7 +50,6 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.98f))
-            .padding(16.dp)
     ) {
         val dims = rememberTvDims(maxWidth.value.toInt(), maxHeight.value.toInt())
         val leftW = minOf(maxWidth * 0.28f, dims.leftMaxWidthDp.dp)
@@ -64,97 +58,82 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
 
         Row(
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(gutter)
+            horizontalArrangement = Arrangement
+                .SpaceBetween,
+            verticalAlignment = Alignment
+                .Top,
+
         ) {
-            // ────────────────────── LEFT PANEL ──────────────────────
-            Column(
+            val quoteIndex = remember { mutableIntStateOf(0) }.intValue
+            val currentQuote = quotes.getOrNull(quoteIndex)?.text
+                ?: "Events are not just gatherings; they spark inspiration and create lasting impressions."
+
+            LeftSidebar(
+                quote = currentQuote,
                 modifier = Modifier
                     .width(leftW)
                     .fillMaxHeight()
-                    .clip(RoundedCornerShape(corner.dp))
+                    .clip(RoundedCornerShape(topEnd = corner.dp,
+                        bottomEnd = corner.dp))
                     .background(sideBarBackground)
-                    .border(3.dp, border, RoundedCornerShape(corner.dp))
-                    .padding(gutter * 1.25f),
-                verticalArrangement = Arrangement.spacedBy(gutter * 1.1f)
-            ) {
-                // Header + live clock
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text("UTMB", style = MaterialTheme.typography.displaySmall)
-                    Text("Faculty of Science Exact", style = MaterialTheme.typography.headlineSmall)
-                    Spacer(Modifier.height(8.dp))
-                    TimeDisplay()
-                }
+                    .border( 3.dp, border, RoundedCornerShape(topEnd = corner.dp, bottomEnd = corner.dp)),
+                cornerDp = corner,
+                gutterDp = dims.gutter
+            )
 
-                // Small illustration (blue pin) – placeholder for a real image if you have one
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 140.dp, max = 180.dp)
-                        .clip(RoundedCornerShape((corner - 6).dp))
-                        .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.90f))
-                )
-
-                // Rotating quote
-                val currentQuote = quotes.getOrNull(remember { mutableIntStateOf(0).also { idx ->
-//                    LaunchedEffect(quotes) {
-//                        while (true) {
-//                            delay(10_000L)
-//                            idx.intValue = (idx.intValue + 1) % quotes.size.coerceAtLeast(1)
-//                        }
-//                    }
-                }.intValue })?.text ?: "Loading quote..."
-                QuoteCard(currentQuote)
-
-                // Social + QR
-                SocialQrPanel(Modifier.fillMaxWidth())
-            }
-
-            // ────────────────────── RIGHT PANEL ──────────────────────
-            Column(
+            Box(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.spacedBy(gutter)
+                    .fillMaxHeight()
             ) {
-                // Hero (60 % of height)
-                HeroBanner(
-                    imageUrl = heroUrl,
-                    corner = corner,
+                // ----- Background canvas (behind everything on the right) -----
+                BackgroundWire(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.60f)
+                        .matchParentSize()      // cover the whole right panel
                 )
 
-                // Event carousel (compact row)
-                EventCarousel(
-                    events = events,
-                    cardHeightDp = dims.cardHeightDp,
-                    corner = corner,
-                    typeScale = dims.typeScale,
-                    cardSpacing = dims.cardSpacing,
+                // ----- Foreground content: hero, events, partners -----
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.28f)
-                )
+                        .fillMaxSize(),        // keep your existing spacing outside this Box
+                    verticalArrangement = Arrangement.spacedBy(gutter)
+                ) {
+                    HeroBanner(
+                        imageUrl = heroImages.getOrNull(heroIdx)
+                            ?: "http://192.168.1.13:8000/events_images/1",
+                        corner = corner,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.60f)
+                    )
 
-                // Partners strip (thin fixed height)
-                PartnersStrip(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
-                )
+                    EventCarousel(
+                        events = events,
+                        cardHeightDp = dims.cardHeightDp,
+                        corner = corner,
+                        typeScale = dims.typeScale,
+                        cardSpacing = dims.cardSpacing,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.28f)
+                    )
+
+                    PartnerChip(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        logoRes = R.drawable.id_logo
+
+                    )
+                }
             }
         }
     }
 }
 
-
-/* ---------- Preview ---------- */
-
-@Preview(showBackground = true, widthDp = 1280, heightDp = 720)
+@Preview(showBackground = true, device = "id:tv_4k",
+  //  widthDp = 1280,
+    //heightDp = 720,
+    )
 @Composable
 private fun PreviewTvAnnouncementScreen() {
     Surface { TvAnnouncementScreen() }

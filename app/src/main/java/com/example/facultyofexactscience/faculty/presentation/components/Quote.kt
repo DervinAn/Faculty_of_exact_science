@@ -34,59 +34,6 @@ import com.example.facultyofexactscience.ui.theme.quoteIconColor
 import com.example.facultyofexactscience.ui.theme.textColor
 import kotlinx.coroutines.delay
 
-@Composable
-fun Quotes(viewModel: FacultyViewModel) {
-    val quotes by viewModel.quotes.collectAsState()
-
-    if (quotes.isEmpty()) {
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Loading quote...", color = textColor)
-        }
-        return
-    }
-
-    // State to track the current index
-    var currentIndex by remember { mutableIntStateOf(0) }
-
-    // Launch a coroutine that updates the index every 10 seconds
-    LaunchedEffect(quotes) {
-        while (true) {
-            delay(10_000L)
-            currentIndex = (currentIndex + 1) % quotes.size
-        }
-    }
-
-    val quote = quotes[currentIndex]
-
-    Column(
-        modifier = Modifier
-            .clip(MaterialTheme.shapes.medium)
-            .fillMaxWidth()
-            .background(quoteCardColor)
-            .padding(horizontal = 16.dp, vertical = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.quote),
-            contentDescription = null,
-            tint = quoteIconColor,
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Text(
-            text = quote.text,
-            fontWeight = FontWeight.SemiBold,
-            style = MaterialTheme.typography.titleLarge,
-            color = textColor,
-            textAlign = TextAlign.Center
-        )
-    }
-}
 
 @Composable
 fun QuoteCard(quote: String) {
@@ -95,13 +42,13 @@ fun QuoteCard(quote: String) {
             .clip(RoundedCornerShape(12.dp))
             .background(quoteCardColor)
             .padding(horizontal = 16.dp, vertical = 20.dp),
-        horizontalAlignment = Alignment.Start
+     //   horizontalAlignment = Alignment.Start
     ) {
         Icon(
             painter = painterResource(R.drawable.quote),
             contentDescription = null,
             tint = quoteIconColor,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier.size(16.dp)
         )
         Spacer(Modifier.height(8.dp))
         Text(
@@ -111,5 +58,19 @@ fun QuoteCard(quote: String) {
             color = textColor,
             textAlign = TextAlign.Start
         )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.BottomEnd
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.quote),
+                contentDescription = null,
+                tint = quoteIconColor,
+                modifier = Modifier
+                   // .align(Alignment.End)
+                    .size(16.dp)
+            )
+        }
     }
 }

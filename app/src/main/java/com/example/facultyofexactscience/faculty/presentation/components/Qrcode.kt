@@ -121,7 +121,8 @@ fun SocialQrPanel(modifier: Modifier = Modifier) {
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .background(goldenYellow)
-            .padding(12.dp),
+            .padding(vertical = 12.dp,
+                horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
