@@ -53,7 +53,7 @@ fun QuoteCard(quote: String) {
         Spacer(Modifier.height(8.dp))
         Text(
             text = quote,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold,
             color = textColor,
             textAlign = TextAlign.Start

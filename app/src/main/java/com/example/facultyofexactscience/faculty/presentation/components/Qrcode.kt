@@ -129,8 +129,8 @@ fun SocialQrPanel(modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            SocialRow(icon = R.drawable.facebook, label = "Facebook")
-            SocialRow(icon = R.drawable.website, label = "Website.com")
+            SocialRow(icon = R.drawable.facebook, label = "كلية العلوم الدقيقة بشار")
+            SocialRow(icon = R.drawable.website, label = "univ-bechar.dz")
             // SocialRow(icon = R.drawable.instagram, label = "instagram")
         }
         Box(
@@ -162,8 +162,8 @@ private fun SocialRow(icon: Int, label: String) {
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
             color = textColor
         )
     }

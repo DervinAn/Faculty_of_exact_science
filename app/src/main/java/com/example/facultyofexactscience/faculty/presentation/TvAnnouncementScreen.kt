@@ -34,6 +34,7 @@ import com.example.facultyofexactscience.faculty.presentation.components.dashboa
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.EventCarousel
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.HeroBanner
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.PartnerChip
+import com.example.facultyofexactscience.faculty.presentation.components.dashboard.PartnerRow
 import com.example.facultyofexactscience.faculty.presentation.components.dashboard.rememberTvDims
 import com.example.facultyofexactscience.ui.theme.border
 import com.example.facultyofexactscience.ui.theme.sideBarBackground
@@ -52,7 +53,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.98f))
     ) {
         val dims = rememberTvDims(maxWidth.value.toInt(), maxHeight.value.toInt())
-        val leftW = minOf(maxWidth * 0.28f, dims.leftMaxWidthDp.dp)
+        val leftW = minOf(maxWidth * 0.31f, dims.leftMaxWidthDp.dp)
         val gutter = dims.gutter.dp
         val corner = dims.corner
 
@@ -86,7 +87,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                     .weight(1f)
                     .fillMaxHeight()
             ) {
-                // ----- Background canvas (behind everything on the right) -----
+
                 BackgroundWire(
                     modifier = Modifier
                         .matchParentSize()      // cover the whole right panel
@@ -118,12 +119,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                             .weight(0.28f)
                     )
 
-                    PartnerChip(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        logoRes = R.drawable.id_logo
-
-                    )
+                    PartnerRow()
                 }
             }
         }
