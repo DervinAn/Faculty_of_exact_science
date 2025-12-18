@@ -1,6 +1,6 @@
 ﻿package com.example.facultyofexactscience.core.domain.util
 
-enum class NetworkError: Error {
+enum class NetworkError : Error {
     REQUEST_TIMEOUT,
     TOO_MANY_REQUESTS,
     NO_INTERNET,

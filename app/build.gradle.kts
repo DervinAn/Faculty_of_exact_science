@@ -11,14 +11,12 @@ android {
 
     defaultConfig {
         applicationId = "com.example.facultyofexactscience"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
-
-        // ✅ Add your API base URL here (please confirm final value)
-        buildConfigField("String", "BASE_URL", "\"http://192.168.1.13:8000/\"")
+        buildConfigField("String", "BASE_URL", "\"https://idevelop.club/tv-app/api/\"")
     }
 
     buildTypes {
@@ -37,6 +35,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -73,10 +72,6 @@ dependencies {
     // Optional utilities you already had
     implementation(libs.androidx.tracing.perfetto.handshake)
 
-    // ❌ Remove Volley & Transport if unused
-    // implementation(libs.volley)
-    // implementation(libs.transport.runtime)
-
     // ✅ KotlinX Serialization
     implementation(libs.kotlinx.serialization.json)
 
@@ -89,4 +84,7 @@ dependencies {
 
     //Coil
     implementation(libs.coil.compose)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
 }

@@ -8,6 +8,9 @@ composeBom = "2024.04.01"
 #coil
 coil = "2.5.0"
 
+desugarJdkLibs = "2.0.4"
+
+
 
 # Lifecycle
 lifecycleRuntimeKtx = "2.8.6"
@@ -38,6 +41,9 @@ ktor = "2.3.3"
 # google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
 
 [libraries]
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
+
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 

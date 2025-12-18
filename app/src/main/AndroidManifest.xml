@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FacultyOfExactScience"
         android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config">
+    >
 
         <activity
             android:name=".MainActivity"
