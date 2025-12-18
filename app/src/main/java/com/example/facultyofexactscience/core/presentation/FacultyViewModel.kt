@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 data class HeroSlide(
     val eventId: Long?,
     val eventIndex: Int,
-    val imageUrl: String?, // null -> HeroBanner will show placeholder
+    val imageUrl: String?, // null -> UI shows placeholder
 )
 
 data class TvUiState(
@@ -25,11 +25,11 @@ data class TvUiState(
 
     val events: List<Event> = emptyList(),
 
-    // ✅ derived from events.images
+    // derived from events.images
     val heroSlides: List<HeroSlide> = emptyList(),
     val heroSlideIndex: Int = 0,
 
-    // ✅ selection synced with heroSlides
+    // selection synced with heroSlides
     val selectedEventId: Long? = null,
     val selectedEventIndex: Int = 0,
 
@@ -39,16 +39,17 @@ data class TvUiState(
 
 class FacultyViewModel : ViewModel() {
 
+    companion object {
+        const val HERO_ROTATE_MS = 8_000L
+        const val QUOTE_ROTATE_MS = 12_000L
+        const val POLL_EVERY_MS = 5 * 60_000L
+    }
+
     private val eventsRepo = AppModule.eventsRepository
     private val quotesRepo = AppModule.quotesRepository
 
     private val _state = MutableStateFlow(TvUiState())
     val state: StateFlow<TvUiState> = _state
-
-    // Configurable
-    private val heroRotateMs = 8_000L
-    private val quoteRotateMs = 12_000L
-    private val pollEveryMs = 5 * 60_000L
 
     init {
         refreshAll()
@@ -59,11 +60,14 @@ class FacultyViewModel : ViewModel() {
 
     fun onEventFocused(index: Int) {
         _state.update { s ->
-            val safeIndex = index.coerceIn(0, (s.events.size - 1).coerceAtLeast(0))
+            if (s.events.isEmpty()) return@update s
+
+            val safeIndex = index.coerceIn(0, s.events.lastIndex)
             val id = s.events.getOrNull(safeIndex)?.id
             val slideIndex = s.heroSlides.indexOfFirst { it.eventIndex == safeIndex }.let {
                 if (it == -1) 0 else it
             }
+
             s.copy(
                 selectedEventIndex = safeIndex,
                 selectedEventId = id,
@@ -75,7 +79,7 @@ class FacultyViewModel : ViewModel() {
     fun refreshAll() = viewModelScope.launch {
         _state.update { it.copy(isLoading = true, error = null) }
 
-        val eventsRes = eventsRepo.getAll() // repo already filters upcoming/sorts :contentReference[oaicite:3]{index=3}
+        val eventsRes = eventsRepo.getAll() // repo should already filter upcoming + sort
         val quotesRes = quotesRepo.getAll(forceRefresh = true)
 
         _state.update { old ->
@@ -118,7 +122,7 @@ class FacultyViewModel : ViewModel() {
 
     private fun startHeroRotation() = viewModelScope.launch {
         while (isActive) {
-            delay(heroRotateMs)
+            delay(HERO_ROTATE_MS)
             _state.update { s ->
                 val slides = s.heroSlides
                 if (slides.size < 2) return@update s
@@ -138,7 +142,7 @@ class FacultyViewModel : ViewModel() {
 
     private fun startQuoteRotation() = viewModelScope.launch {
         while (isActive) {
-            delay(quoteRotateMs)
+            delay(QUOTE_ROTATE_MS)
             _state.update { s ->
                 val size = s.quotes.size
                 if (size < 2) s else s.copy(quoteIndex = (s.quoteIndex + 1) % size)
@@ -148,7 +152,7 @@ class FacultyViewModel : ViewModel() {
 
     private fun startPolling() = viewModelScope.launch {
         while (isActive) {
-            delay(pollEveryMs)
+            delay(POLL_EVERY_MS)
             refreshAll()
         }
     }

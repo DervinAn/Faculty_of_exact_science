@@ -29,7 +29,10 @@ import com.example.facultyofexactscience.core.presentation.components.dashboard.
 import com.example.facultyofexactscience.core.presentation.ui.theme.border
 import com.example.facultyofexactscience.core.presentation.ui.theme.sideBarBackground
 import com.example.facultyofexactscience.events.presentation.EventCarousel
-import com.example.facultyofexactscience.events.presentation.HeroBanner
+import com.example.facultyofexactscience.events.presentation.HeroAnnouncementCard
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
@@ -48,7 +51,12 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
         val currentQuote = state.quotes.getOrNull(state.quoteIndex)?.text
             ?: "Events are not just gatherings; they spark inspiration and create lasting impressions."
 
+        val selectedEvent = state.events.getOrNull(state.selectedEventIndex)
         val heroUrl = state.heroSlides.getOrNull(state.heroSlideIndex)?.imageUrl
+
+        val title = selectedEvent?.title.orEmpty()
+        val desc = selectedEvent?.description.orEmpty()
+        val dateLine = formatEventDateLine(selectedEvent?.date, selectedEvent?.time?.startingTime)
 
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -80,15 +88,20 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(1.dp)
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-
-                    HeroBanner(
+                    HeroAnnouncementCard(
                         imageUrl = heroUrl,
+                        title = if (title.isBlank()) "No upcoming events" else title,
+                        dateLine = dateLine,
+                        description = if (desc.isBlank()) "Stay tuned for updates." else desc,
                         corner = corner,
+                        slideIndex = state.heroSlideIndex,
+                        slideCount = state.heroSlides.size,
+                        autoplayMs = FacultyViewModel.HERO_ROTATE_MS,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.60f)
+                            .weight(0.68f)
                     )
 
                     EventCarousel(
@@ -102,7 +115,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         cardSpacing = dims.cardSpacing,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.30f)
+                            .weight(0.22f)
                     )
 
                     PartnerRow(
@@ -112,5 +125,24 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                 }
             }
         }
+    }
+}
+
+private fun formatEventDateLine(dateIso: String?, startTime: String?): String {
+    val date = runCatching {
+        if (dateIso.isNullOrBlank()) null else LocalDate.parse(dateIso)
+    }.getOrNull()
+
+    val time = runCatching {
+        if (startTime.isNullOrBlank()) null else LocalTime.parse(startTime.take(8))
+    }.getOrNull()
+
+    val dateFmt = DateTimeFormatter.ofPattern("EEE, dd MMM")
+    val timeFmt = DateTimeFormatter.ofPattern("HH:mm")
+
+    return when {
+        date == null -> "Upcoming"
+        time == null -> date.format(dateFmt)
+        else -> "${date.format(dateFmt)} • ${time.format(timeFmt)}"
     }
 }

@@ -14,38 +14,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.facultyofexactscience.events.domain.Event
-import com.example.facultyofexactscience.events.domain.Time
 import kotlin.math.max
-
-@Composable
-private fun PlaceholderEventCard(
-    highlighted: Boolean,
-    heightDp: Int,
-    corner: Float,
-    typeScale: Float,
-    modifier: Modifier = Modifier,
-) {
-    EventCard(
-        event = Event(
-            title = "Event Title",
-            description = "Lorem ipsum dolor sit amet, conslit.",
-            date = "2025-02-01",
-            time = Time("00:00", "00:00"),
-            isCurrent = false
-        ),
-        highlighted = highlighted,
-        heightDp = heightDp,
-        corner = corner,
-        typeScale = typeScale,
-        onFocused = {},
-        modifier = modifier
-    )
-}
+import kotlin.math.min
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun EventCarousel(
-    cardHeightDp: Int,
+    cardHeightDp: Int, // kept for compatibility (not used heavily now)
     corner: Float,
     typeScale: Float,
     cardSpacing: Float,
@@ -55,55 +30,61 @@ fun EventCarousel(
     selectedIndex: Int,
     onEventFocused: (Int) -> Unit,
 ) {
-    val visible = 3
+    val listState = rememberLazyListState()
 
-    val state = rememberLazyListState()
-
-    // ✅ when selected changes (because hero slide changed), scroll to it
     LaunchedEffect(selectedIndex, events.size) {
         if (events.isNotEmpty()) {
             val safe = selectedIndex.coerceIn(0, events.lastIndex)
-            state.animateScrollToItem(safe)
+            listState.animateScrollToItem(safe)
         }
     }
 
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
-        val sidePadding = 6.dp
+        val sidePadding = 10.dp
         val spacing = cardSpacing.dp
         val contentWidth = maxWidth - sidePadding * 2
-        val cardWidth = (contentWidth - spacing * (visible - 1)) / visible
+
+        // adaptive visible count based on width
+        val desiredItemWidthDp = 240f
+        val visible = min(
+            8,
+            max(4, (contentWidth.value / desiredItemWidthDp).toInt())
+        )
+
+        val itemWidth = (contentWidth - spacing * (visible - 1)) / visible
 
         LazyRow(
-            state = state,
+            state = listState,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(sidePadding),
+                .padding(horizontal = sidePadding, vertical = 6.dp),
             horizontalArrangement = Arrangement.spacedBy(spacing),
-            userScrollEnabled = false
+            userScrollEnabled = true
         ) {
             if (isLoading) {
-                items(visible) { idx ->
-                    PlaceholderEventCard(
-                        highlighted = idx == 0,
-                        heightDp = cardHeightDp,
+                items(visible) { _ ->
+                    // simple skeleton-like placeholder
+                    EventRailItem(
+                        event = Event(title = "Loading…", description = "", date = null, images = emptyList()),
+                        selected = false,
                         corner = corner,
-                        typeScale = typeScale
+                        typeScale = typeScale,
+                        onFocused = {},
+                        modifier = Modifier.width(itemWidth)
                     )
                 }
             } else {
                 itemsIndexed(events) { index, ev ->
-                    EventCard(
+                    EventRailItem(
                         event = ev,
-                        highlighted = index == selectedIndex,
-                        heightDp = cardHeightDp,
+                        selected = index == selectedIndex,
                         corner = corner,
                         typeScale = typeScale,
                         onFocused = { onEventFocused(index) },
-                        modifier = Modifier.width(cardWidth)
+                        modifier = Modifier.width(itemWidth)
                     )
                 }
             }
-
         }
     }
 }
