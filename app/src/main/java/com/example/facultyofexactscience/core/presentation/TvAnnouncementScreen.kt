@@ -48,7 +48,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
         val currentQuote = state.quotes.getOrNull(state.quoteIndex)?.text
             ?: "Events are not just gatherings; they spark inspiration and create lasting impressions."
 
-        val heroUrl = state.heroImages.getOrNull(state.heroIndex)
+        val heroUrl = state.heroSlides.getOrNull(state.heroSlideIndex)?.imageUrl
 
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -82,6 +82,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(1.dp)
                 ) {
+
                     HeroBanner(
                         imageUrl = heroUrl,
                         corner = corner,
@@ -92,6 +93,8 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
 
                     EventCarousel(
                         events = state.events,
+                        selectedIndex = state.selectedEventIndex,
+                        onEventFocused = { idx -> viewModel.onEventFocused(idx) },
                         cardHeightDp = dims.cardHeightDp,
                         corner = corner,
                         typeScale = dims.typeScale,

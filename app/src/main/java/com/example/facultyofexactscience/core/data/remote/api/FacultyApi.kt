@@ -8,10 +8,7 @@ import com.example.facultyofexactscience.quotes.data.QuoteDto
 interface FacultyApi {
     // QUOTES (kept)
     suspend fun getQuotes(): Result<List<QuoteDto>, NetworkError>
-    suspend fun createQuote(dto: QuoteDto): Result<QuoteDto, NetworkError>
-    suspend fun getQuote(id: String): Result<QuoteDto, NetworkError>
-    suspend fun updateQuote(id: String, dto: QuoteDto): Result<QuoteDto, NetworkError>
-    suspend fun deleteQuote(id: String): Result<Unit, NetworkError>
+
 
     // EVENTS (TV app uses READ only)
     suspend fun getEvents(): Result<List<EventDto>, NetworkError>

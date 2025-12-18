@@ -13,6 +13,7 @@ import com.example.facultyofexactscience.quotes.data.QuotesRepositoryImpl
 import com.example.facultyofexactscience.quotes.domain.QuotesRepository
 
 object AppModule {
+
     private const val TAG = "AppModule"
 
     // Optional: set this from Application to enable OkHttp disk cache
@@ -21,11 +22,12 @@ object AppModule {
         appContext = context.applicationContext
     }
 
+
     // ---- Dependencies ----
     private val httpClient by lazy {
         Log.d(TAG, "HttpClient initialized")
         // ✅ FIX: HttpClientFactory expects Context? (not an engine)
-        HttpClientFactory.create(appContext)
+        HttpClientFactory.create(null)
     }
 
     private val facultyApi: FacultyApi by lazy {

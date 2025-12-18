@@ -1,31 +1,43 @@
-﻿// app/src/main/java/com/example/facultyofexactscience/feature/faculty/data/repository/QuotesRepositoryImpl.kt
-package com.example.facultyofexactscience.quotes.data
+﻿package com.example.facultyofexactscience.quotes.data
 
 import com.example.facultyofexactscience.core.data.remote.api.FacultyApi
-import com.example.facultyofexactscience.core.domain.util.EmptyResult
 import com.example.facultyofexactscience.core.domain.util.NetworkError
 import com.example.facultyofexactscience.core.domain.util.Result
-import com.example.facultyofexactscience.core.domain.util.asEmptyDataResult
 import com.example.facultyofexactscience.core.domain.util.map
 import com.example.facultyofexactscience.quotes.domain.Quotes
 import com.example.facultyofexactscience.quotes.domain.QuotesRepository
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class QuotesRepositoryImpl(
-    private val api: FacultyApi,
+    private val api: FacultyApi
 ) : QuotesRepository {
 
-    override suspend fun getAll(): Result<List<Quotes>, NetworkError> =
-        api.getQuotes().map { list -> list.map { it.toDomain() } }
+    private val mutex = Mutex()
+    private var cache: List<Quotes> = emptyList()
+    private var lastFetchMs: Long = 0L
 
-    override suspend fun get(id: String): Result<Quotes, NetworkError> =
-        api.getQuote(id).map { it.toDomain() }
+    // adjust as you like
+    private val cacheTtlMs: Long = 30_000L // 30 seconds
 
-    override suspend fun create(quote: Quotes): Result<Quotes, NetworkError> =
-        api.createQuote(quote.toDto()).map { it.toDomain() }
+    override suspend fun getAll(forceRefresh: Boolean): Result<List<Quotes>, NetworkError> =
+        mutex.withLock {
+            android.util.Log.d("QuotesRepositoryImpl", "Fetching quotes from network (forceRefresh=$forceRefresh)")
+            val now = System.currentTimeMillis()
 
-    override suspend fun update(id: String, quote: Quotes): Result<Quotes, NetworkError> =
-        api.updateQuote(id, quote.toDto()).map { it.toDomain() }
+            val cacheValid = cache.isNotEmpty() && (now - lastFetchMs) < cacheTtlMs
+            if (!forceRefresh && cacheValid) {
+                return Result.Success(cache)
+            }
 
-    override suspend fun delete(id: String): EmptyResult<NetworkError> =
-        api.deleteQuote(id).asEmptyDataResult()
+            val res = api.getQuotes().map { dtos ->
+                dtos.map { it.toDomain() }
+            }
+
+            if (res is Result.Success) {
+                cache = res.data
+                lastFetchMs = now
+            }
+            res
+        }
 }
