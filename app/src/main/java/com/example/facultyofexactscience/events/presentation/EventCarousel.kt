@@ -45,16 +45,18 @@ private fun PlaceholderEventCard(
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun EventCarousel(
-    events: List<Event>,
-    selectedIndex: Int,
-    onEventFocused: (Int) -> Unit,
     cardHeightDp: Int,
     corner: Float,
     typeScale: Float,
     cardSpacing: Float,
     modifier: Modifier = Modifier,
+    events: List<Event>,
+    isLoading: Boolean,
+    selectedIndex: Int,
+    onEventFocused: (Int) -> Unit,
 ) {
     val visible = 3
+
     val state = rememberLazyListState()
 
     // ✅ when selected changes (because hero slide changed), scroll to it
@@ -79,14 +81,13 @@ fun EventCarousel(
             horizontalArrangement = Arrangement.spacedBy(spacing),
             userScrollEnabled = false
         ) {
-            if (events.isEmpty()) {
+            if (isLoading) {
                 items(visible) { idx ->
                     PlaceholderEventCard(
                         highlighted = idx == 0,
                         heightDp = cardHeightDp,
                         corner = corner,
-                        typeScale = typeScale,
-                        modifier = Modifier
+                        typeScale = typeScale
                     )
                 }
             } else {
@@ -98,25 +99,11 @@ fun EventCarousel(
                         corner = corner,
                         typeScale = typeScale,
                         onFocused = { onEventFocused(index) },
-                        modifier = Modifier
-                            .width(cardWidth)
+                        modifier = Modifier.width(cardWidth)
                     )
                 }
-
-                // ✅ only placeholders if fewer than visible (no duplicating last event)
-                val missing = max(0, visible - events.size)
-                if (missing > 0) {
-                    items(missing) { _ ->
-                        PlaceholderEventCard(
-                            highlighted = false,
-                            heightDp = cardHeightDp,
-                            corner = corner,
-                            typeScale = typeScale,
-                            modifier = Modifier.width(cardWidth)
-                        )
-                    }
-                }
             }
+
         }
     }
 }

@@ -94,6 +94,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                     EventCarousel(
                         events = state.events,
                         selectedIndex = state.selectedEventIndex,
+                        isLoading = state.isLoading,
                         onEventFocused = { idx -> viewModel.onEventFocused(idx) },
                         cardHeightDp = dims.cardHeightDp,
                         corner = corner,
