@@ -1,4 +1,4 @@
-package com.example.facultyofexactscience.core.presentation.ui.theme
+package com.example.facultyofexactscience.core.presentation.components.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.tv.material3.ExperimentalTvMaterial3Api

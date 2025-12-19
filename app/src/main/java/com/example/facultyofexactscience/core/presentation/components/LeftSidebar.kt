@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
-import com.example.facultyofexactscience.core.presentation.ui.theme.sideBarBackground
-import com.example.facultyofexactscience.core.presentation.ui.theme.textColor
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.sideBarBackground
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.textColor
 import com.example.facultyofexactscience.quotes.presentation.QuoteCard
 
 @Composable

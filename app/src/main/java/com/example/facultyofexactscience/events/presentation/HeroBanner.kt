@@ -10,6 +10,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,29 +53,6 @@ import com.example.facultyofexactscience.R
 /**
  * Keep this if other screens already call HeroBanner(imageUrl,...)
  */
-@Composable
-fun HeroBanner(
-    imageUrl: String?,
-    corner: Float,
-    modifier: Modifier = Modifier,
-    blurRadius: Dp = 0.dp
-) {
-    AsyncImage(
-        model = ImageRequest.Builder(androidx.compose.ui.platform.LocalContext.current)
-            .data(imageUrl)
-            .crossfade(true)
-            .build(),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        placeholder = painterResource(R.drawable.four),
-        error = painterResource(R.drawable.faculte_map),
-        modifier = modifier
-            .padding(16.dp)
-            .clip(RoundedCornerShape(corner.dp))
-            .then(if (blurRadius > 0.dp) Modifier.blur(blurRadius) else Modifier)
-    )
-}
-
 /**
  * New TV-friendly hero announcement (image + readable text overlay + dots + autoplay progress).
  */
@@ -93,8 +76,7 @@ fun HeroAnnouncementCard(
         progress.snapTo(0f)
         if (showProgress && slideCount > 1) {
             progress.animateTo(
-                1f,
-                animationSpec = tween(
+                1f, animationSpec = tween(
                     durationMillis = autoplayMs.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),
                     easing = LinearEasing
                 )
@@ -109,9 +91,7 @@ fun HeroAnnouncementCard(
     ) {
         AsyncImage(
             model = ImageRequest.Builder(androidx.compose.ui.platform.LocalContext.current)
-                .data(imageUrl)
-                .crossfade(true)
-                .build(),
+                .data(imageUrl).crossfade(true).build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             placeholder = painterResource(R.drawable.four),
@@ -138,53 +118,14 @@ fun HeroAnnouncementCard(
                 .padding(horizontal = 28.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.Bottom
         ) {
-            AnimatedContent(
-                targetState = Triple(title, dateLine, description),
-                transitionSpec = {
-                    (fadeIn(tween(220)) + slideInVertically(tween(220)) { it / 8 })
-                        .togetherWith(fadeOut(tween(180)) + slideOutVertically(tween(180)) { -it / 10 })
-                        .using(SizeTransform(clip = false))
-                },
-                label = "heroText"
-            ) { (t, d, desc) ->
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text(
-                        text = t.ifBlank { "Upcoming Event" },
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = Color.White,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
-                    Text(
-                        text = d,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = Color.White.copy(alpha = 0.9f),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
-                    Text(
-                        text = desc,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color.White.copy(alpha = 0.92f),
-                        maxLines = 4,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(14.dp))
-
-            // Dots + progress
+           // Spacer(Modifier.height(14.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 DotsIndicator(
-                    count = slideCount,
-                    index = slideIndex
+                    count = slideCount, index = slideIndex
                 )
 
                 if (showProgress && slideCount > 1) {
@@ -205,7 +146,7 @@ fun HeroAnnouncementCard(
 private fun DotsIndicator(
     count: Int,
     index: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (count <= 1) return
 
@@ -234,3 +175,4 @@ private fun DotsIndicator(
         }
     }
 }
+

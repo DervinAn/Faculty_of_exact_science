@@ -1,4 +1,4 @@
-package com.example.facultyofexactscience.core.presentation.ui.theme
+package com.example.facultyofexactscience.core.presentation.components.ui.theme
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily

@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import com.example.facultyofexactscience.core.presentation.ui.theme.textColor
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.textColor
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date

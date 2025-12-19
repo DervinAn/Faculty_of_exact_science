@@ -21,9 +21,9 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.R
-import com.example.facultyofexactscience.core.presentation.ui.theme.quoteCardColor
-import com.example.facultyofexactscience.core.presentation.ui.theme.quoteIconColor
-import com.example.facultyofexactscience.core.presentation.ui.theme.textColor
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.quoteCardColor
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.quoteIconColor
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.textColor
 
 
 @Composable

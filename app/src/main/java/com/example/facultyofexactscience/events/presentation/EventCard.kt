@@ -62,7 +62,7 @@ fun EventRailItem(
 
     Row(
         modifier = modifier
-            .height(92.dp)
+            .height(118.dp)
             .scale(scale)
             .clip(shape)
             .background(bg)
@@ -119,7 +119,7 @@ fun EventRailItem(
                     fontSize = MaterialTheme.typography.titleMedium.fontSize * 1.10f * typeScale,
                     fontWeight = FontWeight.SemiBold
                 ),
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 color = titleColor
             )

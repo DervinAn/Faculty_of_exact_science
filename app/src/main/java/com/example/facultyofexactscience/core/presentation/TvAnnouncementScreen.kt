@@ -26,8 +26,8 @@ import com.example.facultyofexactscience.core.presentation.components.LeftSideba
 import com.example.facultyofexactscience.core.presentation.components.dashboard.BackgroundWire
 import com.example.facultyofexactscience.core.presentation.components.dashboard.PartnerRow
 import com.example.facultyofexactscience.core.presentation.components.dashboard.rememberTvDims
-import com.example.facultyofexactscience.core.presentation.ui.theme.border
-import com.example.facultyofexactscience.core.presentation.ui.theme.sideBarBackground
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.border
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.sideBarBackground
 import com.example.facultyofexactscience.events.presentation.EventCarousel
 import com.example.facultyofexactscience.events.presentation.HeroAnnouncementCard
 import java.time.LocalDate
@@ -90,6 +90,8 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
+                    // TvAnnouncementScreen.kt (inside HeroAnnouncementCard call)
+
                     HeroAnnouncementCard(
                         imageUrl = heroUrl,
                         title = if (title.isBlank()) "No upcoming events" else title,
@@ -101,8 +103,10 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         autoplayMs = FacultyViewModel.HERO_ROTATE_MS,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .weight(0.60f)
                             .weight(0.68f)
                     )
+
 
                     EventCarousel(
                         events = state.events,

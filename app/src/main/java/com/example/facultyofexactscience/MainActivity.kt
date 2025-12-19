@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.tv.material3.Surface
 import com.example.facultyofexactscience.core.presentation.TvAnnouncementScreen
-import com.example.facultyofexactscience.core.presentation.ui.theme.FacultyOfExactScienceTheme
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.FacultyOfExactScienceTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
