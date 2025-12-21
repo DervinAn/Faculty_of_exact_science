@@ -13,7 +13,7 @@ import com.example.facultyofexactscience.R
 @Composable
 fun BackgroundWire(
     modifier: Modifier = Modifier,
-    opacity: Float = 1f,
+    opacity: Float = 0.16f, // was 1f
 ) {
     Image(
         painter = painterResource(R.drawable.background_vectour_wire),

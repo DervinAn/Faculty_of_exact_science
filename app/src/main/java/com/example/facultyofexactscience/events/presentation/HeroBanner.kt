@@ -1,27 +1,13 @@
 package com.example.facultyofexactscience.events.presentation
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.size
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,18 +17,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -86,7 +68,6 @@ fun HeroAnnouncementCard(
 
     Box(
         modifier = modifier
-            .padding(16.dp)
             .clip(shape)
     ) {
         AsyncImage(
@@ -98,18 +79,23 @@ fun HeroAnnouncementCard(
             error = painterResource(R.drawable.faculte_map),
             modifier = Modifier.fillMaxSize()
         )
-
-        // Contrast overlay (top transparent -> bottom dark)
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
                         0f to Color.Transparent,
-                        0.11f to Color(0x00000000),
-                        1f to Color(0xB3000000),
+                        0.55f to Color(0x33000000),
+                        1f to Color(0xCC000000),
                     )
                 )
+        )
+        // Optional soft border for “card” feeling
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(shape)
+                .background(Color.Transparent)
         )
 
         Column(
@@ -117,7 +103,8 @@ fun HeroAnnouncementCard(
                 .fillMaxSize()
                 .padding(horizontal = 28.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.Bottom
-        ) {
+        )
+        {
            // Spacer(Modifier.height(14.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),

@@ -10,11 +10,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.example.facultyofexactscience.core.presentation.components.ui.theme.textColor
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -25,7 +27,7 @@ fun TimeDisplay() {
     var date by remember { mutableStateOf(getCurrentDate()) }
 
     LaunchedEffect(Unit) {
-        while (true) {
+        while (isActive) {
             time = getCurrentTime()
             date = getCurrentDate()
             delay(1_000L)
@@ -38,23 +40,23 @@ fun TimeDisplay() {
     ) {
         Text(
             text = time,
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
-            color = textColor
+            color = textColor,
+            textAlign = TextAlign.Center
         )
         Text(
             text = date,
-            style = MaterialTheme.typography.titleLarge,
-            color = textColor
+            style = MaterialTheme.typography.titleMedium,
+            color = textColor,
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center
         )
     }
 }
 
 fun getCurrentDate(): String {
-    val dateFormat = SimpleDateFormat(
-        "EEE,d MMMM",
-        Locale.getDefault()
-    )
+    val dateFormat = SimpleDateFormat("EEEE d MMMM", Locale.getDefault())
     return dateFormat.format(Date())
 }
 
@@ -62,4 +64,3 @@ fun getCurrentTime(): String {
     val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
     return sdf.format(Date())
 }
-

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -45,7 +46,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.98f))
     ) {
         val dims = rememberTvDims(maxWidth.value.toInt(), maxHeight.value.toInt())
-        val leftW = minOf(maxWidth * 0.31f, dims.leftMaxWidthDp.dp)
+        val leftW = minOf(maxWidth * 0.335f, dims.leftMaxWidthDp.dp)
         val corner = dims.corner
 
         val currentQuote = state.quotes.getOrNull(state.quoteIndex)?.text
@@ -85,13 +86,12 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                     .fillMaxHeight()
             ) {
                 BackgroundWire(modifier = Modifier.matchParentSize())
-
                 Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dims.gutter.dp),   // <-- adds breathing room around content
+                    verticalArrangement = Arrangement.spacedBy(dims.gutter.dp)
                 ) {
-                    // TvAnnouncementScreen.kt (inside HeroAnnouncementCard call)
-
                     HeroAnnouncementCard(
                         imageUrl = heroUrl,
                         title = if (title.isBlank()) "No upcoming events" else title,
@@ -103,10 +103,8 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         autoplayMs = FacultyViewModel.HERO_ROTATE_MS,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.60f)
-                            .weight(0.68f)
+                            .weight(0.68f) // ✅ keep only ONE weight
                     )
-
 
                     EventCarousel(
                         events = state.events,
@@ -119,7 +117,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         cardSpacing = dims.cardSpacing,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.22f)
+                            .weight(0.24f)
                     )
 
                     PartnerRow(
@@ -127,6 +125,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         chipSize = 50.dp
                     )
                 }
+
             }
         }
     }
