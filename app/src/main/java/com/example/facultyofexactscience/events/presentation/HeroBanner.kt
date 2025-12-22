@@ -31,6 +31,8 @@ import androidx.tv.material3.Text
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.facultyofexactscience.R
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.goldenYellow
+import com.example.facultyofexactscience.core.presentation.components.ui.theme.sideBarBackground
 
 /**
  * Keep this if other screens already call HeroBanner(imageUrl,...)
@@ -118,11 +120,13 @@ fun HeroAnnouncementCard(
                 if (showProgress && slideCount > 1) {
                     LinearProgressIndicator(
                         progress = progress.value,
+                        color = goldenYellow, // ✅ accent like borders/buttons
+                        trackColor = sideBarBackground.copy(alpha = 0.55f), // ✅ teal track, subtle
                         modifier = Modifier
-                            .width(180.dp)
-                            .height(6.dp)
+                            .width(180.dp).height(6.dp)
                             .clip(RoundedCornerShape(99.dp)),
                     )
+
                 }
             }
         }

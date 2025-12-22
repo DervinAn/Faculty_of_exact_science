@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.tv.material3.MaterialTheme
@@ -47,7 +48,6 @@ fun LeftSidebar(
         topStart = cornerDp.dp,
         bottomStart = cornerDp.dp
     )
-
     Column(
         modifier = modifier
             .clip(cardShape)
@@ -68,17 +68,20 @@ fun LeftSidebar(
 
         TimeDisplay()
 
-        // Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.weight(1f))
 
 //        SidebarIllustration(
 //            illustrationRes = illustrationRes,
 //            modifier = Modifier.fillMaxWidth()
 //        )
-
-        Spacer(Modifier.height(16.dp))
+//
+//        Spacer(Modifier.height(16.dp))
         SidebarQuoteCard(
-            quote = quote,
-            modifier = Modifier.fillMaxWidth()
+            quote = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex.",
+                //quote,
+            modifier = Modifier
+                .fillMaxWidth()
+              //  .padding(bottom = 5.dp)
         )
 
         // pushes the Social/QR block to the bottom like your mock
@@ -100,7 +103,7 @@ private fun SidebarHeader(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = title,
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
             color = textColor,
             textAlign = TextAlign.Center,
@@ -108,7 +111,7 @@ private fun SidebarHeader(
         )
         Text(
             text = subtitle,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.SemiBold,
             color = textColor,
             textAlign = TextAlign.Center
@@ -123,7 +126,7 @@ private fun SidebarIllustration(
 ) {
     Box(
         modifier = modifier
-            .height(180.dp)
+            .height(70.dp)
             .clip(RoundedCornerShape(22.dp))
             .background(Color(0xFFD7E9EF)),
         contentAlignment = Alignment.Center

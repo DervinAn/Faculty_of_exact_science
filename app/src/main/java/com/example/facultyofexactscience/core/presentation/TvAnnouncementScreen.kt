@@ -20,6 +20,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.tv.material3.MaterialTheme
@@ -69,6 +71,14 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                 modifier = Modifier
                     .width(leftW)
                     .fillMaxHeight()
+                    .shadow(
+                        elevation = 18.dp,
+                        shape = RoundedCornerShape(topEnd = corner.dp, bottomEnd = corner.dp),
+                        clip = false,
+                        ambientColor = Color.Black.copy(alpha = 0.12f),
+                        spotColor = Color.Black.copy(alpha = 0.35f)
+                    )
+
                     .clip(RoundedCornerShape(topEnd = corner.dp, bottomEnd = corner.dp))
                     .background(sideBarBackground)
                     .border(
@@ -80,16 +90,18 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                 gutterDp = dims.gutter
             )
 
+
             Box(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
             ) {
                 BackgroundWire(modifier = Modifier.matchParentSize())
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(dims.gutter.dp),   // <-- adds breathing room around content
+                        .padding(dims.gutter.dp),
                     verticalArrangement = Arrangement.spacedBy(dims.gutter.dp)
                 ) {
                     HeroAnnouncementCard(
@@ -103,7 +115,7 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         autoplayMs = FacultyViewModel.HERO_ROTATE_MS,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.68f) // ✅ keep only ONE weight
+                            .weight(0.68f) // ✅ only one weight
                     )
 
                     EventCarousel(
@@ -125,7 +137,6 @@ fun TvAnnouncementScreen(viewModel: FacultyViewModel = viewModel()) {
                         chipSize = 50.dp
                     )
                 }
-
             }
         }
     }
