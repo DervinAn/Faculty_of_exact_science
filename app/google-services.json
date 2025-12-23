@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "979867424372",
+    "project_id": "faculty-tv-app",
+    "storage_bucket": "faculty-tv-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979867424372:android:681fff18e4f53419c42321",
+        "android_client_info": {
+          "package_name": "com.example.facultyofexactscience"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhr4JdKWP8G3ZmVUYzPjpwkyBmOLaOIyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
