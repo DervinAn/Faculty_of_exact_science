@@ -53,22 +53,23 @@ fun LeftSidebar(
             .clip(cardShape)
             .background(sideBarBackground)
             .padding(gutterDp.dp)
-            .padding(vertical = 10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(vertical = 9.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         SidebarHeader()
-        Spacer(Modifier.height(14.dp))
+      //  Spacer(Modifier.height(14.dp))
         HorizontalDivider(
             modifier = Modifier.padding(
                 horizontal = 8.dp
             ),
             color = Color(0x66FFFFFF)
         )
-        Spacer(Modifier.height(14.dp))
+        //Spacer(Modifier.height(14.dp))
 
         TimeDisplay()
 
-        Spacer(Modifier.weight(1f))
+        //Spacer(Modifier.weight(1f))
 
 //        SidebarIllustration(
 //            illustrationRes = illustrationRes,
@@ -77,15 +78,14 @@ fun LeftSidebar(
 //
 //        Spacer(Modifier.height(16.dp))
         SidebarQuoteCard(
-            quote = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex.",
-                //quote,
+            quote = quote,
             modifier = Modifier
                 .fillMaxWidth()
               //  .padding(bottom = 5.dp)
         )
 
         // pushes the Social/QR block to the bottom like your mock
-        Spacer(Modifier.weight(1f))
+      //  Spacer(Modifier.weight(1f))
 
         SocialQrPanel(
             facebookLabel = "Facebook",
